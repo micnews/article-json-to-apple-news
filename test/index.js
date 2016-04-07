@@ -5,7 +5,7 @@ import fs from 'fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
 
-test.cb('apple news format', t => {
+test('apple news format', t => {
   const data = [
     { type: 'header1', children: [{ type: 'text', content: 'header 1 text' }] },
     { type: 'header2', children: [{ type: 'text', content: 'header 2 text' }] },
@@ -177,12 +177,9 @@ test.cb('apple news format', t => {
   t.deepEqual(expected.textStyles, apn.textStyles);
 
   // write test article for the preview
-  mkdirp(path.resolve(__dirname, '..', 'apple-news-article'), function (err) {
-    t.error(err);
-    fs.writeFileSync(path.resolve(__dirname, '..', 'apple-news-article', 'article.json'),
-      JSON.stringify(apn, null, 2));
-    t.end();
-  });
+  mkdirp.sync(path.resolve(__dirname, '..', 'apple-news-article'));
+  fs.writeFileSync(path.resolve(__dirname, '..', 'apple-news-article', 'article.json'),
+    JSON.stringify(apn, null, 2));
 });
 
 test('unknown element type', t => {
