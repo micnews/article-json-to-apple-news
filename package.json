@@ -1,0 +1,38 @@
+{
+  "name": "article-json-to-apple-news",
+  "version": "0.0.0",
+  "description": "Render article JSON in the Apple News format",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "semistandard | snazzy",
+    "test": "ava && npm run lint",
+    "test:coverage": "nyc ava",
+    "build": "babel lib --out-dir dist",
+    "watch": "babel lib --out-dir dist --watch",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/micnews/article-json-to-apple-news.git"
+  },
+  "author": "mic.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/micnews/article-json-to-apple-news/issues"
+  },
+  "homepage": "https://github.com/micnews/article-json-to-apple-news#readme",
+  "devDependencies": {
+    "ava": "^0.14.0",
+    "babel-cli": "^6.4.5",
+    "babel-core": "^6.5.2",
+    "babel-preset-es2015": "^6.3.13",
+    "mkdirp": "^0.5.1",
+    "nyc": "^6.2.1",
+    "semistandard": "^7.0.5",
+    "snazzy": "^3.0.0"
+  },
+  "dependencies": {
+    "lodash.startswith": "^4.0.1",
+    "object-assign": "^4.0.1"
+  }
+}
