@@ -6,34 +6,37 @@ import mkdirp from 'mkdirp';
 import path from 'path';
 
 test('apple news format', t => {
-  const data = [
-    { type: 'header1', children: [{ type: 'text', content: 'header 1 text' }] },
-    { type: 'header2', children: [{ type: 'text', content: 'header 2 text' }] },
-    { type: 'header3', children: [{ type: 'text', content: 'header 3 text' }] },
-    { type: 'header4', children: [{ type: 'text', content: 'header 4 text' }] },
-    { type: 'header5', children: [{ type: 'text', content: 'header 5 text' }] },
-    { type: 'header6', children: [{ type: 'text', content: 'header 6 text' }] },
-    { type: 'paragraph',
-      children: [
-        { type: 'text', href: 'http://mic.com', content: 'link' },
-        { type: 'linebreak' },
-        { type: 'text', content: 'normal text ' },
-        { type: 'text', bold: true, content: 'bold text ' },
-        { type: 'text', italic: true, content: 'italic text ' },
-        { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
-        { type: 'text', mark: true, content: 'marked text' },
-        { type: 'text', mark: true, markClass: 'marker1' }
-      ]
-    },
-    { type: 'paragraph',
-      children: [
-        { type: 'text', content: 'other text' }
-      ]
-    },
-    { type: 'paragraph', children: [{ type: 'text', mark: true }] }
-  ];
+  const data = {
+    title: 'Article Title',
+    body: [
+      { type: 'header1', children: [{ type: 'text', content: 'header 1 text' }] },
+      { type: 'header2', children: [{ type: 'text', content: 'header 2 text' }] },
+      { type: 'header3', children: [{ type: 'text', content: 'header 3 text' }] },
+      { type: 'header4', children: [{ type: 'text', content: 'header 4 text' }] },
+      { type: 'header5', children: [{ type: 'text', content: 'header 5 text' }] },
+      { type: 'header6', children: [{ type: 'text', content: 'header 6 text' }] },
+      { type: 'paragraph',
+        children: [
+          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'linebreak' },
+          { type: 'text', content: 'normal text ' },
+          { type: 'text', bold: true, content: 'bold text ' },
+          { type: 'text', italic: true, content: 'italic text ' },
+          { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
+          { type: 'text', mark: true, content: 'marked text' },
+          { type: 'text', mark: true, markClass: 'marker1' }
+        ]
+      },
+      { type: 'paragraph',
+        children: [
+          { type: 'text', content: 'other text' }
+        ]
+      },
+      { type: 'paragraph', children: [{ type: 'text', mark: true }] }
+    ]
+  };
 
-  const apn = toAppleNews(data, { identifier: '100', title: 'Article Title' });
+  const apn = toAppleNews(data, {identifier: '100'});
   t.is(apn.version, '1.0');
   t.is(apn.identifier, '100');
   t.is(apn.title, 'Article Title');
@@ -183,23 +186,29 @@ test('apple news format', t => {
 });
 
 test('unknown element type', t => {
-  const data = [
-    { type: 'unknown-element', children: [] }
-  ];
+  const data = {
+    body: [
+      { type: 'unknown-element', children: [] }
+    ],
+    title: 'Article Title'
+  };
 
-  const apn = toAppleNews(data, { identifier: '100', title: 'Article Title' });
+  const apn = toAppleNews(data, {identifier: '100'});
   t.deepEqual(apn.components, []);
 });
 
 test('empty text element should not be rendered', t => {
-  const data = [
-    { type: 'paragraph', children: [
-      { type: 'text', content: '' },
-      { type: 'other', content: 'a' },
-      { type: 'text' }
-    ] }
-  ];
+  const data = {
+    body: [
+      { type: 'paragraph', children: [
+        { type: 'text', content: '' },
+        { type: 'other', content: 'a' },
+        { type: 'text' }
+      ] }
+    ],
+    title: 'Article Title'
+  };
 
-  const apn = toAppleNews(data, { identifier: '100', title: 'Article Title' });
+  const apn = toAppleNews(data, {identifier: '100'});
   t.deepEqual(apn.components, []);
 });
