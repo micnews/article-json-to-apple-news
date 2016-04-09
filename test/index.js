@@ -209,20 +209,148 @@ test('embeds', t => {
   const data = {
     title: 'embeds',
     body: [
-      {type: 'embed', embedType: 'instagram', id: 'BDvcE47g6Ed'},
-      {type: 'embed', embedType: 'twitter', url: 'https://twitter.com/randal_olson/status/709090467821064196'},
-      {type: 'embed', embedType: 'youtube', youtubeId: 'oo6D4MXrJ5c'},
-      {type: 'embed', embedType: 'image', url: 'bundle://image.jpg'}
+      {
+        type: 'embed',
+        embedType: 'instagram',
+        id: 'BDvcE47g6Ed',
+        caption: [
+          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'linebreak' },
+          { type: 'text', content: 'normal text ' },
+          { type: 'text', bold: true, content: 'bold text ' },
+          { type: 'text', italic: true, content: 'italic text ' },
+          { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
+          { type: 'text', mark: true, content: 'marked text' },
+          { type: 'text', mark: true, markClass: 'marker1' }
+        ]
+      },
+      {
+        type: 'embed',
+        embedType: 'twitter',
+        url: 'https://twitter.com/randal_olson/status/709090467821064196',
+        caption: [
+          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'linebreak' },
+          { type: 'text', content: 'normal text ' },
+          { type: 'text', bold: true, content: 'bold text ' },
+          { type: 'text', italic: true, content: 'italic text ' },
+          { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
+          { type: 'text', mark: true, content: 'marked text' },
+          { type: 'text', mark: true, markClass: 'marker1' }
+        ]
+      },
+      {
+        type: 'embed',
+        embedType: 'youtube',
+        youtubeId: 'oo6D4MXrJ5c',
+        caption: [
+          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'linebreak' },
+          { type: 'text', content: 'normal text ' },
+          { type: 'text', bold: true, content: 'bold text ' },
+          { type: 'text', italic: true, content: 'italic text ' },
+          { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
+          { type: 'text', mark: true, content: 'marked text' },
+          { type: 'text', mark: true, markClass: 'marker1' }
+        ]
+      },
+      {
+        type: 'embed',
+        embedType: 'image',
+        url: 'bundle://image.jpg',
+        caption: [
+          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'linebreak' },
+          { type: 'text', content: 'normal text ' },
+          { type: 'text', bold: true, content: 'bold text ' },
+          { type: 'text', italic: true, content: 'italic text ' },
+          { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
+          { type: 'text', mark: true, content: 'marked text' },
+          { type: 'text', mark: true, markClass: 'marker1' }
+        ]
+      }
     ]
   };
   const actual = toAppleNews(data, {identifier: '100'});
   writeAppleNewsArticle(actual, 'embeds');
 
+  const caption = {
+    role: 'caption',
+    text: 'link\nnormal text bold text italic text bold italic text marked text\n',
+    textStyle: 'captionStyle',
+    additions: [
+      {
+        'type': 'link',
+        'rangeStart': 0,
+        'rangeLength': 4,
+        'URL': 'http://mic.com'
+      }
+    ],
+    'inlineTextStyles': [
+      {
+        'rangeStart': 0,
+        'rangeLength': 4,
+        'textStyle': 'bodyLinkTextStyle'
+      },
+      {
+        'rangeStart': 17,
+        'rangeLength': 10,
+        'textStyle': 'bodyBoldStyle'
+      },
+      {
+        'rangeStart': 27,
+        'rangeLength': 12,
+        'textStyle': 'bodyItalicStyle'
+      },
+      {
+        'rangeStart': 39,
+        'rangeLength': 17,
+        'textStyle': 'bodyBoldItalicStyle'
+      }
+    ]
+  };
+
   const expectedComponents = [
-    {role: 'instagram', URL: 'https://instagram.com/p/BDvcE47g6Ed'},
-    {role: 'tweet', URL: 'https://twitter.com/randal_olson/status/709090467821064196'},
-    {role: 'embedwebvideo', URL: 'https://www.youtube.com/embed/oo6D4MXrJ5c'},
-    {role: 'photo', URL: 'bundle://image.jpg'}
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'instagram',
+          URL: 'https://instagram.com/p/BDvcE47g6Ed'
+        },
+        caption
+      ]
+    },
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'tweet',
+          URL: 'https://twitter.com/randal_olson/status/709090467821064196'
+        },
+        caption
+      ]
+    },
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'embedwebvideo',
+          URL: 'https://www.youtube.com/embed/oo6D4MXrJ5c'
+        },
+        caption
+      ]
+    },
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'photo',
+          URL: 'bundle://image.jpg'
+        },
+        caption
+      ]
+    }
   ];
 
   t.deepEqual(actual.components, expectedComponents);
