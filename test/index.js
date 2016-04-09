@@ -257,7 +257,7 @@ test('embeds', t => {
       {
         type: 'embed',
         embedType: 'image',
-        url: 'bundle://image.jpg',
+        url: 'http://example.com/image.jpg',
         caption: [
           { type: 'text', href: 'http://mic.com', content: 'link' },
           { type: 'linebreak' },
@@ -346,13 +346,61 @@ test('embeds', t => {
       components: [
         {
           role: 'photo',
-          URL: 'bundle://image.jpg'
+          URL: 'bundle://image-0'
         },
         caption
       ]
     }
   ];
 
+  t.deepEqual(actual.components, expectedComponents);
+});
+
+test('images', t => {
+  const expectedComponents = [
+    {
+      role: 'container',
+      components: [{role: 'photo', URL: 'bundle://image-0'}]
+    },
+    {
+      role: 'container',
+      components: [{role: 'photo', URL: 'bundle://image-1'}]
+    },
+    {
+      role: 'container',
+      components: [{role: 'photo', URL: 'bundle://image-0'}]
+    }
+  ];
+  const expectedBundlesToUrls = {
+    'image-0': 'http://example.com/image.jpg',
+    'image-1': 'http://example.com/beep-boop.png'
+  };
+  const input = {
+    title: 'foo',
+    body: [
+      {
+        type: 'embed',
+        embedType: 'image',
+        url: 'http://example.com/image.jpg',
+        caption: []
+      },
+      {
+        type: 'embed',
+        embedType: 'image',
+        url: 'http://example.com/beep-boop.png',
+        caption: []
+      },
+      {
+        type: 'embed',
+        embedType: 'image',
+        url: 'http://example.com/image.jpg',
+        caption: []
+      }
+    ]
+  };
+  const actual = toAppleNews(input, {identifier: '100'});
+
+  t.deepEqual(actual.bundlesToUrls, expectedBundlesToUrls);
   t.deepEqual(actual.components, expectedComponents);
 });
 
