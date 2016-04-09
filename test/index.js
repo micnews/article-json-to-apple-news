@@ -53,6 +53,10 @@ test('apple news format', t => {
         fontName: 'HelveticaNeue',
         fontSize: 18
       },
+      captionStyle: {
+        fontName: 'HelveticaNeue',
+        fontSize: 13
+      },
       heading1Style: {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 32
