@@ -5,6 +5,12 @@ import fs from 'fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
 
+const writeAppleNewsArticle = (apn, name) => {
+  mkdirp.sync(path.resolve(__dirname, '..', 'apple-news-article', name));
+  fs.writeFileSync(path.resolve(__dirname, '..', 'apple-news-article', name, 'article.json'),
+    JSON.stringify(apn, null, 2));
+};
+
 test('apple news format', t => {
   const data = {
     title: 'Article Title',
@@ -180,9 +186,7 @@ test('apple news format', t => {
   t.deepEqual(expected.textStyles, apn.textStyles);
 
   // write test article for the preview
-  mkdirp.sync(path.resolve(__dirname, '..', 'apple-news-article'));
-  fs.writeFileSync(path.resolve(__dirname, '..', 'apple-news-article', 'article.json'),
-    JSON.stringify(apn, null, 2));
+  writeAppleNewsArticle(apn, 'text');
 });
 
 test('unknown element type', t => {
@@ -195,6 +199,29 @@ test('unknown element type', t => {
 
   const apn = toAppleNews(data, {identifier: '100'});
   t.deepEqual(apn.components, []);
+});
+
+test('embeds', t => {
+  const data = {
+    title: 'embeds',
+    body: [
+      {type: 'embed', embedType: 'instagram', id: 'BDvcE47g6Ed'},
+      {type: 'embed', embedType: 'twitter', url: 'https://twitter.com/randal_olson/status/709090467821064196'},
+      {type: 'embed', embedType: 'youtube', youtubeId: 'oo6D4MXrJ5c'},
+      {type: 'embed', embedType: 'image', url: 'bundle://image.jpg'}
+    ]
+  };
+  const actual = toAppleNews(data, {identifier: '100'});
+  writeAppleNewsArticle(actual, 'embeds');
+
+  const expectedComponents = [
+    {role: 'instagram', URL: 'https://instagram.com/p/BDvcE47g6Ed'},
+    {role: 'tweet', URL: 'https://twitter.com/randal_olson/status/709090467821064196'},
+    {role: 'embedwebvideo', URL: 'https://www.youtube.com/embed/oo6D4MXrJ5c'},
+    {role: 'photo', URL: 'bundle://image.jpg'}
+  ];
+
+  t.deepEqual(actual.components, expectedComponents);
 });
 
 test('empty text element should not be rendered', t => {
