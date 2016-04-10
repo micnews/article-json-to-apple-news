@@ -14,6 +14,10 @@ const writeAppleNewsArticle = (apn, name) => {
 test('apple news format', t => {
   const data = {
     title: 'Article Title',
+    author: {
+      name: 'David Hipsterson'
+    },
+    date: new Date('2016-02-04T14:00:00Z'),
     body: [
       { type: 'header1', children: [{ type: 'text', content: 'header 1 text' }] },
       { type: 'header2', children: [{ type: 'text', content: 'header 2 text' }] },
@@ -101,7 +105,9 @@ test('apple news format', t => {
       {
         role: 'header',
         components: [
-          {role: 'title', text: 'Article Title'}
+          {role: 'title', text: 'Article Title'},
+          {role: 'author', text: 'By David Hipsterson'},
+          {role: 'byline', text: 'February 4, 2016'}
         ]
       },
       {
@@ -201,10 +207,14 @@ test('apple news format', t => {
 
 test('unknown element type', t => {
   const data = {
+    title: 'Article Title',
+    author: {
+      name: 'David Hipsterson'
+    },
+    date: new Date('2016-02-04T14:00:00Z'),
     body: [
       { type: 'unknown-element', children: [] }
-    ],
-    title: 'Article Title'
+    ]
   };
 
   const {article} = toAppleNews(data, {identifier: '100'});
@@ -215,6 +225,10 @@ test('unknown element type', t => {
 test('embeds', t => {
   const data = {
     title: 'embeds',
+    author: {
+      name: 'David Hipsterson'
+    },
+    date: new Date('2016-02-04T14:00:00Z'),
     body: [
       {
         type: 'embed',
@@ -388,6 +402,10 @@ test('images', t => {
   };
   const input = {
     title: 'foo',
+    author: {
+      name: 'David Hipsterson'
+    },
+    date: new Date('2016-02-04T14:00:00Z'),
     body: [
       {
         type: 'embed',
@@ -418,20 +436,20 @@ test('images', t => {
   t.deepEqual(actualBodyComponents, expectedComponents);
 });
 
-test('header', t => {
-
-});
-
 test('empty text element should not be rendered', t => {
   const data = {
+    title: 'Article Title',
+    author: {
+      name: 'David Hipsterson'
+    },
+    date: new Date('2016-02-04T14:00:00Z'),
     body: [
       { type: 'paragraph', children: [
         { type: 'text', content: '' },
         { type: 'other', content: 'a' },
         { type: 'text' }
       ] }
-    ],
-    title: 'Article Title'
+    ]
   };
 
   const {article} = toAppleNews(data, {identifier: '100'});
