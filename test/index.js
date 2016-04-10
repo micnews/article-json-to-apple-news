@@ -5,6 +5,12 @@ import fs from 'fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
 
+const writeAppleNewsArticle = (apn, name) => {
+  mkdirp.sync(path.resolve(__dirname, '..', 'apple-news-article', name));
+  fs.writeFileSync(path.resolve(__dirname, '..', 'apple-news-article', name, 'article.json'),
+    JSON.stringify(apn, null, 2));
+};
+
 test('apple news format', t => {
   const data = {
     title: 'Article Title',
@@ -36,16 +42,20 @@ test('apple news format', t => {
     ]
   };
 
-  const apn = toAppleNews(data, {identifier: '100'});
-  t.is(apn.version, '1.0');
-  t.is(apn.identifier, '100');
-  t.is(apn.title, 'Article Title');
+  const {article} = toAppleNews(data, {identifier: '100'});
+  t.is(article.version, '1.0');
+  t.is(article.identifier, '100');
+  t.is(article.title, 'Article Title');
 
   const expected = {
     componentTextStyles: {
       bodyStyle: {
         fontName: 'HelveticaNeue',
         fontSize: 18
+      },
+      captionStyle: {
+        fontName: 'HelveticaNeue',
+        fontSize: 13
       },
       heading1Style: {
         fontName: 'HelveticaNeue-Bold',
@@ -175,14 +185,12 @@ test('apple news format', t => {
     ]
   };
 
-  t.deepEqual(expected.components, apn.components);
-  t.deepEqual(expected.componentTextStyles, apn.componentTextStyles);
-  t.deepEqual(expected.textStyles, apn.textStyles);
+  t.deepEqual(expected.components, article.components);
+  t.deepEqual(expected.componentTextStyles, article.componentTextStyles);
+  t.deepEqual(expected.textStyles, article.textStyles);
 
   // write test article for the preview
-  mkdirp.sync(path.resolve(__dirname, '..', 'apple-news-article'));
-  fs.writeFileSync(path.resolve(__dirname, '..', 'apple-news-article', 'article.json'),
-    JSON.stringify(apn, null, 2));
+  writeAppleNewsArticle(article, 'text');
 });
 
 test('unknown element type', t => {
@@ -193,8 +201,208 @@ test('unknown element type', t => {
     title: 'Article Title'
   };
 
-  const apn = toAppleNews(data, {identifier: '100'});
-  t.deepEqual(apn.components, []);
+  const {article} = toAppleNews(data, {identifier: '100'});
+  t.deepEqual(article.components, []);
+});
+
+test('embeds', t => {
+  const data = {
+    title: 'embeds',
+    body: [
+      {
+        type: 'embed',
+        embedType: 'instagram',
+        id: 'BDvcE47g6Ed',
+        caption: [
+          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'linebreak' },
+          { type: 'text', content: 'normal text ' },
+          { type: 'text', bold: true, content: 'bold text ' },
+          { type: 'text', italic: true, content: 'italic text ' },
+          { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
+          { type: 'text', mark: true, content: 'marked text' },
+          { type: 'text', mark: true, markClass: 'marker1' }
+        ]
+      },
+      {
+        type: 'embed',
+        embedType: 'twitter',
+        url: 'https://twitter.com/randal_olson/status/709090467821064196',
+        caption: [
+          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'linebreak' },
+          { type: 'text', content: 'normal text ' },
+          { type: 'text', bold: true, content: 'bold text ' },
+          { type: 'text', italic: true, content: 'italic text ' },
+          { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
+          { type: 'text', mark: true, content: 'marked text' },
+          { type: 'text', mark: true, markClass: 'marker1' }
+        ]
+      },
+      {
+        type: 'embed',
+        embedType: 'youtube',
+        youtubeId: 'oo6D4MXrJ5c',
+        caption: [
+          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'linebreak' },
+          { type: 'text', content: 'normal text ' },
+          { type: 'text', bold: true, content: 'bold text ' },
+          { type: 'text', italic: true, content: 'italic text ' },
+          { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
+          { type: 'text', mark: true, content: 'marked text' },
+          { type: 'text', mark: true, markClass: 'marker1' }
+        ]
+      },
+      {
+        type: 'embed',
+        embedType: 'image',
+        url: 'http://example.com/image.jpg',
+        caption: [
+          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'linebreak' },
+          { type: 'text', content: 'normal text ' },
+          { type: 'text', bold: true, content: 'bold text ' },
+          { type: 'text', italic: true, content: 'italic text ' },
+          { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
+          { type: 'text', mark: true, content: 'marked text' },
+          { type: 'text', mark: true, markClass: 'marker1' }
+        ]
+      }
+    ]
+  };
+  const {article} = toAppleNews(data, {identifier: '100'});
+  writeAppleNewsArticle(actual, 'embeds');
+  const actual = article;
+
+  const caption = {
+    role: 'caption',
+    text: 'link\nnormal text bold text italic text bold italic text marked text\n',
+    textStyle: 'captionStyle',
+    additions: [
+      {
+        'type': 'link',
+        'rangeStart': 0,
+        'rangeLength': 4,
+        'URL': 'http://mic.com'
+      }
+    ],
+    'inlineTextStyles': [
+      {
+        'rangeStart': 0,
+        'rangeLength': 4,
+        'textStyle': 'bodyLinkTextStyle'
+      },
+      {
+        'rangeStart': 17,
+        'rangeLength': 10,
+        'textStyle': 'bodyBoldStyle'
+      },
+      {
+        'rangeStart': 27,
+        'rangeLength': 12,
+        'textStyle': 'bodyItalicStyle'
+      },
+      {
+        'rangeStart': 39,
+        'rangeLength': 17,
+        'textStyle': 'bodyBoldItalicStyle'
+      }
+    ]
+  };
+
+  const expectedComponents = [
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'instagram',
+          URL: 'https://instagram.com/p/BDvcE47g6Ed'
+        },
+        caption
+      ]
+    },
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'tweet',
+          URL: 'https://twitter.com/randal_olson/status/709090467821064196'
+        },
+        caption
+      ]
+    },
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'embedwebvideo',
+          URL: 'https://www.youtube.com/embed/oo6D4MXrJ5c'
+        },
+        caption
+      ]
+    },
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'photo',
+          URL: 'bundle://image-0'
+        },
+        caption
+      ]
+    }
+  ];
+
+  t.deepEqual(actual.components, expectedComponents);
+});
+
+test('images', t => {
+  const expectedComponents = [
+    {
+      role: 'container',
+      components: [{role: 'photo', URL: 'bundle://image-0'}]
+    },
+    {
+      role: 'container',
+      components: [{role: 'photo', URL: 'bundle://image-1'}]
+    },
+    {
+      role: 'container',
+      components: [{role: 'photo', URL: 'bundle://image-0'}]
+    }
+  ];
+  const expectedBundlesToUrls = {
+    'image-0': 'http://example.com/image.jpg',
+    'image-1': 'http://example.com/beep-boop.png'
+  };
+  const input = {
+    title: 'foo',
+    body: [
+      {
+        type: 'embed',
+        embedType: 'image',
+        url: 'http://example.com/image.jpg',
+        caption: []
+      },
+      {
+        type: 'embed',
+        embedType: 'image',
+        url: 'http://example.com/beep-boop.png',
+        caption: []
+      },
+      {
+        type: 'embed',
+        embedType: 'image',
+        url: 'http://example.com/image.jpg',
+        caption: []
+      }
+    ]
+  };
+  const {article, bundlesToUrls} = toAppleNews(input, {identifier: '100'});
+
+  t.deepEqual(bundlesToUrls, expectedBundlesToUrls);
+  t.deepEqual(article.components, expectedComponents);
 });
 
 test('empty text element should not be rendered', t => {
@@ -209,6 +417,6 @@ test('empty text element should not be rendered', t => {
     title: 'Article Title'
   };
 
-  const apn = toAppleNews(data, {identifier: '100'});
-  t.deepEqual(apn.components, []);
+  const {article} = toAppleNews(data, {identifier: '100'});
+  t.deepEqual(article.components, []);
 });
