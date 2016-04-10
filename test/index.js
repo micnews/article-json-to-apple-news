@@ -99,6 +99,12 @@ test('apple news format', t => {
     },
     components: [
       {
+        role: 'header',
+        components: [
+          {role: 'title', text: 'Article Title'}
+        ]
+      },
+      {
         role: 'heading1',
         text: 'header 1 text',
         textStyle: 'heading1Style',
@@ -202,7 +208,8 @@ test('unknown element type', t => {
   };
 
   const {article} = toAppleNews(data, {identifier: '100'});
-  t.deepEqual(article.components, []);
+  // slice(1) to skip header
+  t.deepEqual(article.components.slice(1), []);
 });
 
 test('embeds', t => {
@@ -354,7 +361,10 @@ test('embeds', t => {
     }
   ];
 
-  t.deepEqual(actual.components, expectedComponents);
+  // slice(1) to skip header
+  const actualBodyComponents = actual.components.slice(1);
+
+  t.deepEqual(actualBodyComponents, expectedComponents);
 });
 
 test('images', t => {
@@ -401,8 +411,15 @@ test('images', t => {
   };
   const {article, bundlesToUrls} = toAppleNews(input, {identifier: '100'});
 
+  // slice(1) to skip header
+  const actualBodyComponents = article.components.slice(1);
+
   t.deepEqual(bundlesToUrls, expectedBundlesToUrls);
-  t.deepEqual(article.components, expectedComponents);
+  t.deepEqual(actualBodyComponents, expectedComponents);
+});
+
+test('header', t => {
+
 });
 
 test('empty text element should not be rendered', t => {
@@ -418,5 +435,6 @@ test('empty text element should not be rendered', t => {
   };
 
   const {article} = toAppleNews(data, {identifier: '100'});
-  t.deepEqual(article.components, []);
+  // slice(1) to skip header
+  t.deepEqual(article.components.slice(1), []);
 });
