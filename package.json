@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "lodash.startswith": "^4.0.1",
-    "object-assign": "^4.0.1"
+    "object-assign": "^4.0.1",
+    "walk-apple-news-format": "^1.0.0"
   }
 }
