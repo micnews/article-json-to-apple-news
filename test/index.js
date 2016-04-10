@@ -42,10 +42,10 @@ test('apple news format', t => {
     ]
   };
 
-  const apn = toAppleNews(data, {identifier: '100'});
-  t.is(apn.version, '1.0');
-  t.is(apn.identifier, '100');
-  t.is(apn.title, 'Article Title');
+  const {article} = toAppleNews(data, {identifier: '100'});
+  t.is(article.version, '1.0');
+  t.is(article.identifier, '100');
+  t.is(article.title, 'Article Title');
 
   const expected = {
     componentTextStyles: {
@@ -185,12 +185,12 @@ test('apple news format', t => {
     ]
   };
 
-  t.deepEqual(expected.components, apn.components);
-  t.deepEqual(expected.componentTextStyles, apn.componentTextStyles);
-  t.deepEqual(expected.textStyles, apn.textStyles);
+  t.deepEqual(expected.components, article.components);
+  t.deepEqual(expected.componentTextStyles, article.componentTextStyles);
+  t.deepEqual(expected.textStyles, article.textStyles);
 
   // write test article for the preview
-  writeAppleNewsArticle(apn, 'text');
+  writeAppleNewsArticle(article, 'text');
 });
 
 test('unknown element type', t => {
@@ -201,8 +201,8 @@ test('unknown element type', t => {
     title: 'Article Title'
   };
 
-  const apn = toAppleNews(data, {identifier: '100'});
-  t.deepEqual(apn.components, []);
+  const {article} = toAppleNews(data, {identifier: '100'});
+  t.deepEqual(article.components, []);
 });
 
 test('embeds', t => {
@@ -271,8 +271,9 @@ test('embeds', t => {
       }
     ]
   };
-  const actual = toAppleNews(data, {identifier: '100'});
+  const {article} = toAppleNews(data, {identifier: '100'});
   writeAppleNewsArticle(actual, 'embeds');
+  const actual = article;
 
   const caption = {
     role: 'caption',
@@ -398,10 +399,10 @@ test('images', t => {
       }
     ]
   };
-  const actual = toAppleNews(input, {identifier: '100'});
+  const {article, bundlesToUrls} = toAppleNews(input, {identifier: '100'});
 
-  t.deepEqual(actual.bundlesToUrls, expectedBundlesToUrls);
-  t.deepEqual(actual.components, expectedComponents);
+  t.deepEqual(bundlesToUrls, expectedBundlesToUrls);
+  t.deepEqual(article.components, expectedComponents);
 });
 
 test('empty text element should not be rendered', t => {
@@ -416,6 +417,6 @@ test('empty text element should not be rendered', t => {
     title: 'Article Title'
   };
 
-  const apn = toAppleNews(data, {identifier: '100'});
-  t.deepEqual(apn.components, []);
+  const {article} = toAppleNews(data, {identifier: '100'});
+  t.deepEqual(article.components, []);
 });
