@@ -264,7 +264,7 @@ test('embeds', t => {
       {
         type: 'embed',
         embedType: 'image',
-        url: 'http://example.com/image.jpg',
+        url: 'bundle://image.jpg',
         caption: [
           { type: 'text', href: 'http://mic.com', content: 'link' },
           { type: 'linebreak' },
@@ -279,8 +279,8 @@ test('embeds', t => {
     ]
   };
   const {article} = toAppleNews(data, {identifier: '100'});
-  writeAppleNewsArticle(actual, 'embeds');
   const actual = article;
+  writeAppleNewsArticle(actual, 'embeds');
 
   const caption = {
     role: 'caption',
@@ -354,7 +354,7 @@ test('embeds', t => {
       components: [
         {
           role: 'photo',
-          URL: 'bundle://image-0'
+          URL: 'bundle://image.jpg'
         },
         caption
       ]
