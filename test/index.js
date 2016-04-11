@@ -436,6 +436,64 @@ test('images', t => {
   t.deepEqual(actualBodyComponents, expectedComponents);
 });
 
+test('header with image', t => {
+  const data = {
+    title: 'Beep boop',
+    author: {
+      name: 'Sergii Iefremov'
+    },
+    date: new Date('1985-03-22'),
+    headerEmbed: {
+      type: 'embed',
+      embedType: 'image',
+      url: 'bundle://image.jpg',
+      caption: [
+        { type: 'text', content: 'normal text' }
+      ]
+    },
+    body: []
+  };
+  const {article} = toAppleNews(data, {identifier: '100'});
+  const actual = article.components[0];
+  const expected = {
+    role: 'header',
+    components: [{
+      role: 'container',
+      components: [{
+        role: 'photo',
+        URL: 'bundle://image.jpg'
+      }, {
+        role: 'caption',
+        text: 'normal text\n',
+        textStyle: 'captionStyle',
+        additions: [],
+        inlineTextStyles: []
+      }]
+    }, {
+      role: 'title',
+      text: 'Beep boop'
+    }, {
+      role: 'author',
+      text: `By Sergii Iefremov`
+    }, {
+      role: 'byline',
+      text: 'March 22, 1985'
+    }]
+  };
+
+  writeAppleNewsArticle(article, 'header-with-image');
+
+  t.deepEqual(actual.components[0].components[0], expected.components[0].components[0]);
+  t.deepEqual(actual.components[0].components[1], expected.components[0].components[1]);
+  t.deepEqual(actual.components[0], expected.components[0]);
+  t.deepEqual(actual.components[1], expected.components[1]);
+  t.deepEqual(actual.components[2], expected.components[2]);
+  t.deepEqual(actual.components[3], expected.components[3]);
+  t.deepEqual(actual.components[4], expected.components[4]);
+  t.deepEqual(actual.components, expected.components);
+  t.deepEqual(actual, expected);
+});
+
 test('empty text element should not be rendered', t => {
   const data = {
     title: 'Article Title',
