@@ -303,7 +303,7 @@ test('embeds', t => {
       {
         type: 'embed',
         embedType: 'image',
-        url: 'bundle://image.jpg',
+        src: 'bundle://image.jpg',
         caption: [
           { type: 'text', href: 'http://mic.com', content: 'link' },
           { type: 'linebreak' },
@@ -435,19 +435,19 @@ test('images', t => {
       {
         type: 'embed',
         embedType: 'image',
-        url: 'http://example.com/image.jpg',
+        src: 'http://example.com/image.jpg',
         caption: []
       },
       {
         type: 'embed',
         embedType: 'image',
-        url: 'http://example.com/beep-boop.png',
+        src: 'http://example.com/beep-boop.png',
         caption: []
       },
       {
         type: 'embed',
         embedType: 'image',
-        url: 'http://example.com/image.jpg',
+        src: 'http://example.com/image.jpg',
         caption: []
       }
     ]
@@ -472,7 +472,7 @@ test('header with image', t => {
     headerEmbed: {
       type: 'embed',
       embedType: 'image',
-      url: 'bundle://image.jpg',
+      src: 'bundle://image.jpg',
       caption: [
         { type: 'text', content: 'normal text' }
       ]
