@@ -14,6 +14,11 @@ const writeAppleNewsArticle = (apn, name) => {
 test('apple news format', t => {
   const data = {
     title: 'Article Title',
+    author: {
+      name: 'David Hipsterson',
+      href: 'http://mic.com'
+    },
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
       { type: 'header1', children: [{ type: 'text', content: 'header 1 text' }] },
       { type: 'header2', children: [{ type: 'text', content: 'header 2 text' }] },
@@ -57,6 +62,10 @@ test('apple news format', t => {
         fontName: 'HelveticaNeue',
         fontSize: 13
       },
+      titleStyle: {
+        fontName: 'HelveticaNeue-Bold',
+        fontSize: 36
+      },
       heading1Style: {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 32
@@ -98,6 +107,32 @@ test('apple news format', t => {
       }
     },
     components: [
+      {
+        role: 'header',
+        components: [
+          {
+            role: 'title',
+            text: 'Article Title',
+            textStyle: 'titleStyle'
+          },
+          {
+            role: 'byline',
+            text: 'By David Hipsterson February 4, 2016\n',
+            textStyle: 'captionStyle',
+            additions: [{
+              type: 'link',
+              rangeStart: 3,
+              rangeLength: 16,
+              URL: 'http://mic.com'
+            }],
+            inlineTextStyles: [{
+              rangeStart: 3,
+              rangeLength: 16,
+              textStyle: 'bodyLinkTextStyle'
+            }]
+          }
+        ]
+      },
       {
         role: 'heading1',
         text: 'header 1 text',
@@ -185,6 +220,8 @@ test('apple news format', t => {
     ]
   };
 
+  t.deepEqual(expected.components[0], article.components[0]);
+
   t.deepEqual(expected.components, article.components);
   t.deepEqual(expected.componentTextStyles, article.componentTextStyles);
   t.deepEqual(expected.textStyles, article.textStyles);
@@ -195,19 +232,28 @@ test('apple news format', t => {
 
 test('unknown element type', t => {
   const data = {
+    title: 'Article Title',
+    author: {
+      name: 'David Hipsterson'
+    },
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
       { type: 'unknown-element', children: [] }
-    ],
-    title: 'Article Title'
+    ]
   };
 
   const {article} = toAppleNews(data, {identifier: '100'});
-  t.deepEqual(article.components, []);
+  // slice(1) to skip header
+  t.deepEqual(article.components.slice(1), []);
 });
 
 test('embeds', t => {
   const data = {
     title: 'embeds',
+    author: {
+      name: 'David Hipsterson'
+    },
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
       {
         type: 'embed',
@@ -257,7 +303,7 @@ test('embeds', t => {
       {
         type: 'embed',
         embedType: 'image',
-        url: 'http://example.com/image.jpg',
+        url: 'bundle://image.jpg',
         caption: [
           { type: 'text', href: 'http://mic.com', content: 'link' },
           { type: 'linebreak' },
@@ -272,8 +318,8 @@ test('embeds', t => {
     ]
   };
   const {article} = toAppleNews(data, {identifier: '100'});
-  writeAppleNewsArticle(actual, 'embeds');
   const actual = article;
+  writeAppleNewsArticle(actual, 'embeds');
 
   const caption = {
     role: 'caption',
@@ -347,14 +393,17 @@ test('embeds', t => {
       components: [
         {
           role: 'photo',
-          URL: 'bundle://image-0'
+          URL: 'bundle://image.jpg'
         },
         caption
       ]
     }
   ];
 
-  t.deepEqual(actual.components, expectedComponents);
+  // slice(1) to skip header
+  const actualBodyComponents = actual.components.slice(1);
+
+  t.deepEqual(actualBodyComponents, expectedComponents);
 });
 
 test('images', t => {
@@ -378,6 +427,10 @@ test('images', t => {
   };
   const input = {
     title: 'foo',
+    author: {
+      name: 'David Hipsterson'
+    },
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
       {
         type: 'embed',
@@ -401,22 +454,99 @@ test('images', t => {
   };
   const {article, bundlesToUrls} = toAppleNews(input, {identifier: '100'});
 
+  // slice(1) to skip header
+  const actualBodyComponents = article.components.slice(1);
+
   t.deepEqual(bundlesToUrls, expectedBundlesToUrls);
-  t.deepEqual(article.components, expectedComponents);
+  t.deepEqual(actualBodyComponents, expectedComponents);
+});
+
+test('header with image', t => {
+  const data = {
+    title: 'Beep boop',
+    author: {
+      name: 'Sergii Iefremov',
+      href: 'http://mic.com/'
+    },
+    publishedDate: new Date('1985-03-22'),
+    headerEmbed: {
+      type: 'embed',
+      embedType: 'image',
+      url: 'bundle://image.jpg',
+      caption: [
+        { type: 'text', content: 'normal text' }
+      ]
+    },
+    body: []
+  };
+  const {article} = toAppleNews(data, {identifier: '100'});
+  const actual = article.components[0];
+  const expected = {
+    role: 'header',
+    components: [{
+      role: 'container',
+      components: [{
+        role: 'photo',
+        URL: 'bundle://image.jpg'
+      }, {
+        role: 'caption',
+        text: 'normal text\n',
+        textStyle: 'captionStyle',
+        additions: [],
+        inlineTextStyles: []
+      }]
+    }, {
+      role: 'title',
+      text: 'Beep boop',
+      textStyle: 'titleStyle'
+    }, {
+      role: 'byline',
+      text: 'By Sergii Iefremov March 22, 1985\n',
+      textStyle: 'captionStyle',
+      additions: [{
+        type: 'link',
+        rangeStart: 3,
+        rangeLength: 15,
+        URL: 'http://mic.com/'
+      }],
+      inlineTextStyles: [{
+        rangeStart: 3,
+        rangeLength: 15,
+        textStyle: 'bodyLinkTextStyle'
+      }]
+    }]
+  };
+
+  writeAppleNewsArticle(article, 'header-with-image');
+
+  t.deepEqual(actual.components[0].components[0], expected.components[0].components[0]);
+  t.deepEqual(actual.components[0].components[1], expected.components[0].components[1]);
+  t.deepEqual(actual.components[0], expected.components[0]);
+  t.deepEqual(actual.components[1], expected.components[1]);
+  t.deepEqual(actual.components[2], expected.components[2]);
+  t.deepEqual(actual.components[3], expected.components[3]);
+  t.deepEqual(actual.components[4], expected.components[4]);
+  t.deepEqual(actual.components, expected.components);
+  t.deepEqual(actual, expected);
 });
 
 test('empty text element should not be rendered', t => {
   const data = {
+    title: 'Article Title',
+    author: {
+      name: 'David Hipsterson'
+    },
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
       { type: 'paragraph', children: [
         { type: 'text', content: '' },
         { type: 'other', content: 'a' },
         { type: 'text' }
       ] }
-    ],
-    title: 'Article Title'
+    ]
   };
 
   const {article} = toAppleNews(data, {identifier: '100'});
-  t.deepEqual(article.components, []);
+  // slice(1) to skip header
+  t.deepEqual(article.components.slice(1), []);
 });
