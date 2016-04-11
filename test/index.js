@@ -18,7 +18,7 @@ test('apple news format', t => {
       name: 'David Hipsterson',
       href: 'http://mic.com'
     },
-    date: new Date('2016-02-04T14:00:00Z'),
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
       { type: 'header1', children: [{ type: 'text', content: 'header 1 text' }] },
       { type: 'header2', children: [{ type: 'text', content: 'header 2 text' }] },
@@ -236,7 +236,7 @@ test('unknown element type', t => {
     author: {
       name: 'David Hipsterson'
     },
-    date: new Date('2016-02-04T14:00:00Z'),
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
       { type: 'unknown-element', children: [] }
     ]
@@ -253,7 +253,7 @@ test('embeds', t => {
     author: {
       name: 'David Hipsterson'
     },
-    date: new Date('2016-02-04T14:00:00Z'),
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
       {
         type: 'embed',
@@ -430,7 +430,7 @@ test('images', t => {
     author: {
       name: 'David Hipsterson'
     },
-    date: new Date('2016-02-04T14:00:00Z'),
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
       {
         type: 'embed',
@@ -468,7 +468,7 @@ test('header with image', t => {
       name: 'Sergii Iefremov',
       href: 'http://mic.com/'
     },
-    date: new Date('1985-03-22'),
+    publishedDate: new Date('1985-03-22'),
     headerEmbed: {
       type: 'embed',
       embedType: 'image',
@@ -536,7 +536,7 @@ test('empty text element should not be rendered', t => {
     author: {
       name: 'David Hipsterson'
     },
-    date: new Date('2016-02-04T14:00:00Z'),
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
       { type: 'paragraph', children: [
         { type: 'text', content: '' },
