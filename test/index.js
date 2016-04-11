@@ -4,6 +4,7 @@ import toAppleNews from '../lib';
 import fs from 'fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
+import packageJson from '../package.json';
 
 const writeAppleNewsArticle = (apn, name) => {
   mkdirp.sync(path.resolve(__dirname, '..', 'apple-news-article', name));
@@ -553,4 +554,47 @@ test('empty text element should not be rendered', t => {
   const {article} = toAppleNews(data, {identifier: '100'});
   // slice(1) to skip header
   t.deepEqual(article.components.slice(1), []);
+});
+
+test('metadata', t => {
+  const data = {
+    title: 'Article Title',
+    author: {
+      name: 'David Hipsterson'
+    },
+    headerEmbed: {
+      type: 'embed',
+      embedType: 'image',
+      src: 'http://example.com/hero.jpg'
+    },
+    publishedDate: new Date('2016-02-04T14:00:00Z'),
+    modifiedDate: new Date('2010-01-04T14:00:00Z'),
+    body: []
+  };
+
+  const {article, bundlesToUrls} = toAppleNews(data, {
+    identifier: '100',
+    excerpt: 'This is cool article',
+    canonicalURL: 'https://example.com/100',
+    campaignData: {
+      key: 'value',
+      key2: 'value2'
+    },
+    keywords: ['cool', 'article']
+  });
+  t.is(article.datePublished, '2016-02-04T14:00:00Z');
+  t.is(article.dateCreated, '2016-02-04T14:00:00Z');
+  t.is(article.dateModified, '2010-01-04T14:00:00Z');
+  t.deepEqual(article.authors, ['David Hipsterson']);
+  t.is(article.generatorName, 'article-json-to-apple-news');
+  t.is(article.generatorVersion, packageJson.version);
+  t.is(article.thumbnailURL, 'bundle://image-0');
+  t.deepEqual(bundlesToUrls, { 'image-0': 'http://example.com/hero.jpg' });
+  t.is(article.excerpt, 'This is cool article');
+  t.is(article.canonicalURL, 'https://example.com/100');
+  t.deepEqual(article.campaignData, {
+    key: 'value',
+    key2: 'value2'
+  });
+  t.deepEqual(article.keywords, ['cool', 'article']);
 });
