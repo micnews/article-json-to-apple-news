@@ -58,9 +58,13 @@ test('apple news format', t => {
         fontName: 'HelveticaNeue',
         fontSize: 18
       },
-      captionStyle: {
+      bylineStyle: {
         fontName: 'HelveticaNeue',
         fontSize: 13
+      },
+      captionStyle: {
+        fontName: 'HelveticaNeue',
+        fontSize: 10
       },
       titleStyle: {
         fontName: 'HelveticaNeue-Bold',
@@ -118,7 +122,7 @@ test('apple news format', t => {
           {
             role: 'byline',
             text: 'By David Hipsterson February 4, 2016\n',
-            textStyle: 'captionStyle',
+            textStyle: 'bylineStyle',
             additions: [{
               type: 'link',
               rangeStart: 3,
@@ -502,7 +506,7 @@ test('header with image', t => {
     }, {
       role: 'byline',
       text: 'By Sergii Iefremov March 22, 1985\n',
-      textStyle: 'captionStyle',
+      textStyle: 'bylineStyle',
       additions: [{
         type: 'link',
         rangeStart: 3,
