@@ -9,10 +9,10 @@ test('bundleImages() simple', t => {
   }];
   const expectedComponents = [{
     role: 'photo',
-    URL: 'bundle://image-0'
+    URL: 'bundle://image-0.jpg'
   }];
   const expectedBundlesToUrls = {
-    'image-0': 'http://example.com/beep-boop.jpg'
+    'image-0.jpg': 'http://example.com/beep-boop.jpg'
   };
   const actualBundlesToUrls = bundleImages(components);
   const actualComponents = components;

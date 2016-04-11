@@ -415,20 +415,20 @@ test('images', t => {
   const expectedComponents = [
     {
       role: 'container',
-      components: [{role: 'photo', URL: 'bundle://image-0'}]
+      components: [{role: 'photo', URL: 'bundle://image-0.jpg'}]
     },
     {
       role: 'container',
-      components: [{role: 'photo', URL: 'bundle://image-1'}]
+      components: [{role: 'photo', URL: 'bundle://image-1.png'}]
     },
     {
       role: 'container',
-      components: [{role: 'photo', URL: 'bundle://image-0'}]
+      components: [{role: 'photo', URL: 'bundle://image-0.jpg'}]
     }
   ];
   const expectedBundlesToUrls = {
-    'image-0': 'http://example.com/image.jpg',
-    'image-1': 'http://example.com/beep-boop.png'
+    'image-0.jpg': 'http://example.com/image.jpg',
+    'image-1.png': 'http://example.com/beep-boop.png'
   };
   const input = {
     title: 'foo',
@@ -588,8 +588,8 @@ test('metadata', t => {
   t.deepEqual(article.authors, ['David Hipsterson']);
   t.is(article.generatorName, 'article-json-to-apple-news');
   t.is(article.generatorVersion, packageJson.version);
-  t.is(article.thumbnailURL, 'bundle://image-0');
-  t.deepEqual(bundlesToUrls, { 'image-0': 'http://example.com/hero.jpg' });
+  t.is(article.thumbnailURL, 'bundle://image-0.jpg');
+  t.deepEqual(bundlesToUrls, { 'image-0.jpg': 'http://example.com/hero.jpg' });
   t.is(article.excerpt, 'This is cool article');
   t.is(article.canonicalURL, 'https://example.com/100');
   t.deepEqual(article.campaignData, {
