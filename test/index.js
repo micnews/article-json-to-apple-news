@@ -15,7 +15,8 @@ test('apple news format', t => {
   const data = {
     title: 'Article Title',
     author: {
-      name: 'David Hipsterson'
+      name: 'David Hipsterson',
+      href: 'http://mic.com'
     },
     date: new Date('2016-02-04T14:00:00Z'),
     body: [
@@ -61,6 +62,10 @@ test('apple news format', t => {
         fontName: 'HelveticaNeue',
         fontSize: 13
       },
+      titleStyle: {
+        fontName: 'HelveticaNeue-Bold',
+        fontSize: 36
+      },
       heading1Style: {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 32
@@ -105,9 +110,27 @@ test('apple news format', t => {
       {
         role: 'header',
         components: [
-          {role: 'title', text: 'Article Title'},
-          {role: 'author', text: 'By David Hipsterson'},
-          {role: 'byline', text: 'February 4, 2016'}
+          {
+            role: 'title',
+            text: 'Article Title',
+            textStyle: 'titleStyle'
+          },
+          {
+            role: 'byline',
+            text: 'By David Hipsterson February 4, 2016\n',
+            textStyle: 'captionStyle',
+            additions: [{
+              type: 'link',
+              rangeStart: 3,
+              rangeLength: 16,
+              URL: 'http://mic.com'
+            }],
+            inlineTextStyles: [{
+              rangeStart: 3,
+              rangeLength: 16,
+              textStyle: 'bodyLinkTextStyle'
+            }]
+          }
         ]
       },
       {
@@ -196,6 +219,8 @@ test('apple news format', t => {
       }
     ]
   };
+
+  t.deepEqual(expected.components[0], article.components[0]);
 
   t.deepEqual(expected.components, article.components);
   t.deepEqual(expected.componentTextStyles, article.componentTextStyles);
@@ -440,7 +465,8 @@ test('header with image', t => {
   const data = {
     title: 'Beep boop',
     author: {
-      name: 'Sergii Iefremov'
+      name: 'Sergii Iefremov',
+      href: 'http://mic.com/'
     },
     date: new Date('1985-03-22'),
     headerEmbed: {
@@ -471,13 +497,23 @@ test('header with image', t => {
       }]
     }, {
       role: 'title',
-      text: 'Beep boop'
-    }, {
-      role: 'author',
-      text: `By Sergii Iefremov`
+      text: 'Beep boop',
+      textStyle: 'titleStyle'
     }, {
       role: 'byline',
-      text: 'March 22, 1985'
+      text: 'By Sergii Iefremov March 22, 1985\n',
+      textStyle: 'captionStyle',
+      additions: [{
+        type: 'link',
+        rangeStart: 3,
+        rangeLength: 15,
+        URL: 'http://mic.com/'
+      }],
+      inlineTextStyles: [{
+        rangeStart: 3,
+        rangeLength: 15,
+        textStyle: 'bodyLinkTextStyle'
+      }]
     }]
   };
 
