@@ -1,6 +1,6 @@
 {
   "name": "article-json-to-apple-news",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Render article JSON in the Apple News format",
   "main": "dist/index.js",
   "scripts": {
