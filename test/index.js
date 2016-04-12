@@ -117,11 +117,13 @@ test('apple news format', t => {
         components: [
           {
             role: 'title',
+            layout: 'bodyLayout',
             text: 'Article Title',
             textStyle: 'titleStyle'
           },
           {
             role: 'byline',
+            layout: 'bodyLayout',
             text: 'By David Hipsterson February 4, 2016\n',
             textStyle: 'bylineStyle',
             additions: [{
@@ -139,93 +141,97 @@ test('apple news format', t => {
         ]
       },
       {
-        role: 'heading1',
-        text: 'header 1 text',
-        textStyle: 'heading1Style',
-        additions: [],
-        inlineTextStyles: []
-      },
-      {
-        role: 'heading2',
-        text: 'header 2 text',
-        textStyle: 'heading2Style',
-        additions: [],
-        inlineTextStyles: []
-      },
-      {
-        role: 'heading3',
-        text: 'header 3 text',
-        textStyle: 'heading3Style',
-        additions: [],
-        inlineTextStyles: []
-      },
-      {
-        role: 'heading4',
-        text: 'header 4 text',
-        textStyle: 'heading4Style',
-        additions: [],
-        inlineTextStyles: []
-      },
-      {
-        role: 'heading5',
-        text: 'header 5 text',
-        textStyle: 'heading5Style',
-        additions: [],
-        inlineTextStyles: []
-      },
-      {
-        role: 'heading6',
-        text: 'header 6 text',
-        textStyle: 'heading6Style',
-        additions: [],
-        inlineTextStyles: []
-      },
-      {
-        role: 'body',
-        text: 'link\nnormal text bold text italic text bold italic text marked text\n',
-        textStyle: 'bodyStyle',
-        additions: [
+        role: 'container',
+        components: [
           {
-            'type': 'link',
-            'rangeStart': 0,
-            'rangeLength': 4,
-            'URL': 'http://mic.com'
+            role: 'heading1',
+            text: 'header 1 text',
+            textStyle: 'heading1Style',
+            additions: [],
+            inlineTextStyles: []
+          },
+          {
+            role: 'heading2',
+            text: 'header 2 text',
+            textStyle: 'heading2Style',
+            additions: [],
+            inlineTextStyles: []
+          },
+          {
+            role: 'heading3',
+            text: 'header 3 text',
+            textStyle: 'heading3Style',
+            additions: [],
+            inlineTextStyles: []
+          },
+          {
+            role: 'heading4',
+            text: 'header 4 text',
+            textStyle: 'heading4Style',
+            additions: [],
+            inlineTextStyles: []
+          },
+          {
+            role: 'heading5',
+            text: 'header 5 text',
+            textStyle: 'heading5Style',
+            additions: [],
+            inlineTextStyles: []
+          },
+          {
+            role: 'heading6',
+            text: 'header 6 text',
+            textStyle: 'heading6Style',
+            additions: [],
+            inlineTextStyles: []
+          },
+          {
+            role: 'body',
+            text: 'link\nnormal text bold text italic text bold italic text marked text\n',
+            textStyle: 'bodyStyle',
+            additions: [
+              {
+                'type': 'link',
+                'rangeStart': 0,
+                'rangeLength': 4,
+                'URL': 'http://mic.com'
+              }
+            ],
+            'inlineTextStyles': [
+              {
+                'rangeStart': 0,
+                'rangeLength': 4,
+                'textStyle': 'bodyLinkTextStyle'
+              },
+              {
+                'rangeStart': 17,
+                'rangeLength': 10,
+                'textStyle': 'bodyBoldStyle'
+              },
+              {
+                'rangeStart': 27,
+                'rangeLength': 12,
+                'textStyle': 'bodyItalicStyle'
+              },
+              {
+                'rangeStart': 39,
+                'rangeLength': 17,
+                'textStyle': 'bodyBoldItalicStyle'
+              }
+            ]
+          },
+          {
+            role: 'body',
+            text: 'other text\n',
+            textStyle: 'bodyStyle',
+            additions: [],
+            inlineTextStyles: []
           }
         ],
-        'inlineTextStyles': [
-          {
-            'rangeStart': 0,
-            'rangeLength': 4,
-            'textStyle': 'bodyLinkTextStyle'
-          },
-          {
-            'rangeStart': 17,
-            'rangeLength': 10,
-            'textStyle': 'bodyBoldStyle'
-          },
-          {
-            'rangeStart': 27,
-            'rangeLength': 12,
-            'textStyle': 'bodyItalicStyle'
-          },
-          {
-            'rangeStart': 39,
-            'rangeLength': 17,
-            'textStyle': 'bodyBoldItalicStyle'
-          }
-        ]
-      },
-      {
-        role: 'body',
-        text: 'other text\n',
-        textStyle: 'bodyStyle',
-        additions: [],
-        inlineTextStyles: []
+        layout: 'bodyLayout'
       }
     ]
   };
-
-  t.deepEqual(expected.components[0], article.components[0]);
 
   t.deepEqual(expected.components, article.components);
   t.deepEqual(expected.componentTextStyles, article.componentTextStyles);
@@ -248,8 +254,7 @@ test('unknown element type', t => {
   };
 
   const {article} = toAppleNews(data, {identifier: '100'});
-  // slice(1) to skip header
-  t.deepEqual(article.components.slice(1), []);
+  t.deepEqual(article.components[1].components, []);
 });
 
 test('embeds', t => {
@@ -405,9 +410,7 @@ test('embeds', t => {
     }
   ];
 
-  // slice(1) to skip header
-  const actualBodyComponents = actual.components.slice(1);
-
+  const actualBodyComponents = actual.components[1].components;
   t.deepEqual(actualBodyComponents, expectedComponents);
 });
 
@@ -458,9 +461,7 @@ test('images', t => {
     ]
   };
   const {article, bundlesToUrls} = toAppleNews(input, {identifier: '100'});
-
-  // slice(1) to skip header
-  const actualBodyComponents = article.components.slice(1);
+  const actualBodyComponents = article.components[1].components;
 
   t.deepEqual(bundlesToUrls, expectedBundlesToUrls);
   t.deepEqual(actualBodyComponents, expectedComponents);
@@ -502,6 +503,7 @@ test('header with image', t => {
       }]
     }, {
       role: 'title',
+      layout: 'bodyLayout',
       text: 'Beep boop',
       textStyle: 'titleStyle'
     }, {
@@ -518,20 +520,12 @@ test('header with image', t => {
         rangeStart: 3,
         rangeLength: 15,
         textStyle: 'bodyLinkTextStyle'
-      }]
+      }],
+      layout: 'bodyLayout'
     }]
   };
 
   writeAppleNewsArticle(article, 'header-with-image');
-
-  t.deepEqual(actual.components[0].components[0], expected.components[0].components[0]);
-  t.deepEqual(actual.components[0].components[1], expected.components[0].components[1]);
-  t.deepEqual(actual.components[0], expected.components[0]);
-  t.deepEqual(actual.components[1], expected.components[1]);
-  t.deepEqual(actual.components[2], expected.components[2]);
-  t.deepEqual(actual.components[3], expected.components[3]);
-  t.deepEqual(actual.components[4], expected.components[4]);
-  t.deepEqual(actual.components, expected.components);
   t.deepEqual(actual, expected);
 });
 
@@ -552,8 +546,7 @@ test('empty text element should not be rendered', t => {
   };
 
   const {article} = toAppleNews(data, {identifier: '100'});
-  // slice(1) to skip header
-  t.deepEqual(article.components.slice(1), []);
+  t.deepEqual(article.components[1].components, []);
 });
 
 test('metadata', t => {
