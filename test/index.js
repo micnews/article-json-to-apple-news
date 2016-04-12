@@ -575,19 +575,19 @@ test('metadata', t => {
     },
     keywords: ['cool', 'article']
   });
-  t.is(article.datePublished, '2016-02-04T14:00:00Z');
-  t.is(article.dateCreated, '2016-02-04T14:00:00Z');
-  t.is(article.dateModified, '2010-01-04T14:00:00Z');
-  t.deepEqual(article.authors, ['David Hipsterson']);
-  t.is(article.generatorName, 'article-json-to-apple-news');
-  t.is(article.generatorVersion, packageJson.version);
-  t.is(article.thumbnailURL, 'bundle://image-0.jpg');
+  t.is(article.metadata.datePublished, '2016-02-04T14:00:00Z');
+  t.is(article.metadata.dateCreated, '2016-02-04T14:00:00Z');
+  t.is(article.metadata.dateModified, '2010-01-04T14:00:00Z');
+  t.deepEqual(article.metadata.authors, ['David Hipsterson']);
+  t.is(article.metadata.generatorName, 'article-json-to-apple-news');
+  t.is(article.metadata.generatorVersion, packageJson.version);
+  t.is(article.metadata.thumbnailURL, 'bundle://image-0.jpg');
   t.deepEqual(bundlesToUrls, { 'image-0.jpg': 'http://example.com/hero.jpg' });
-  t.is(article.excerpt, 'This is cool article');
-  t.is(article.canonicalURL, 'https://example.com/100');
-  t.deepEqual(article.campaignData, {
+  t.is(article.metadata.excerpt, 'This is cool article');
+  t.is(article.metadata.canonicalURL, 'https://example.com/100');
+  t.deepEqual(article.metadata.campaignData, {
     key: 'value',
     key2: 'value2'
   });
-  t.deepEqual(article.keywords, ['cool', 'article']);
+  t.deepEqual(article.metadata.keywords, ['cool', 'article']);
 });
