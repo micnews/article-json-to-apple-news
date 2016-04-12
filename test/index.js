@@ -123,8 +123,7 @@ test('apple news format', t => {
           },
           {
             role: 'byline',
-            layout: 'bodyLayout',
-            text: 'By David Hipsterson February 4, 2016\n',
+            text: 'By David Hipsterson February 4, 2016',
             textStyle: 'bylineStyle',
             additions: [{
               type: 'link',
@@ -136,7 +135,8 @@ test('apple news format', t => {
               rangeStart: 3,
               rangeLength: 16,
               textStyle: 'bodyLinkTextStyle'
-            }]
+            }],
+            layout: 'bodyLayout'
           }
         ]
       },
@@ -508,7 +508,7 @@ test('header with image', t => {
       textStyle: 'titleStyle'
     }, {
       role: 'byline',
-      text: 'By Sergii Iefremov March 22, 1985\n',
+      text: 'By Sergii Iefremov March 22, 1985',
       textStyle: 'bylineStyle',
       additions: [{
         type: 'link',
