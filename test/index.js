@@ -151,49 +151,42 @@ test('apple news format', t => {
           {
             role: 'heading1',
             text: 'header 1 text',
-            textStyle: 'heading1Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'heading2',
             text: 'header 2 text',
-            textStyle: 'heading2Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'heading3',
             text: 'header 3 text',
-            textStyle: 'heading3Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'heading4',
             text: 'header 4 text',
-            textStyle: 'heading4Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'heading5',
             text: 'header 5 text',
-            textStyle: 'heading5Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'heading6',
             text: 'header 6 text',
-            textStyle: 'heading6Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'body',
             text: 'link\nnormal text bold text italic text bold italic text marked text\n',
-            textStyle: 'bodyStyle',
             additions: [
               {
                 'type': 'link',
@@ -228,7 +221,6 @@ test('apple news format', t => {
           {
             role: 'body',
             text: 'other text\n',
-            textStyle: 'bodyStyle',
             additions: [],
             inlineTextStyles: []
           }
