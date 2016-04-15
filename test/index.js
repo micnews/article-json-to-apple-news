@@ -59,6 +59,11 @@ test('apple news format', t => {
         fontName: 'HelveticaNeue',
         fontSize: 18
       },
+      quoteStyle: {
+        fontName: 'HelveticaNeue-Italic',
+        fontSize: 26,
+        textAlignment: 'center'
+      },
       bylineStyle: {
         fontName: 'HelveticaNeue',
         fontSize: 13
