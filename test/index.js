@@ -55,48 +55,48 @@ test('apple news format', t => {
 
   const expected = {
     componentTextStyles: {
-      bodyStyle: {
+      'default-body': {
         fontName: 'HelveticaNeue',
         fontSize: 18
       },
-      quoteStyle: {
+      'default-quote': {
         fontName: 'HelveticaNeue-Italic',
         fontSize: 26,
         textAlignment: 'center'
       },
-      bylineStyle: {
+      'default-byline': {
         fontName: 'HelveticaNeue',
         fontSize: 13
       },
-      captionStyle: {
+      'default-caption': {
         fontName: 'HelveticaNeue',
         fontSize: 10
       },
-      titleStyle: {
+      'default-title': {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 36
       },
-      heading1Style: {
+      'default-heading1': {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 32
       },
-      heading2Style: {
+      'default-heading2': {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 24
       },
-      heading3Style: {
+      'default-heading3': {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 19
       },
-      heading4Style: {
+      'default-heading4': {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 16
       },
-      heading5Style: {
+      'default-heading5': {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 13
       },
-      heading6Style: {
+      'default-heading6': {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 11
       }
@@ -123,13 +123,11 @@ test('apple news format', t => {
           {
             role: 'title',
             layout: 'bodyLayout',
-            text: 'Article Title',
-            textStyle: 'titleStyle'
+            text: 'Article Title'
           },
           {
             role: 'byline',
             text: 'By David Hipsterson February 4, 2016',
-            textStyle: 'bylineStyle',
             additions: [{
               type: 'link',
               rangeStart: 3,
@@ -151,49 +149,42 @@ test('apple news format', t => {
           {
             role: 'heading1',
             text: 'header 1 text',
-            textStyle: 'heading1Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'heading2',
             text: 'header 2 text',
-            textStyle: 'heading2Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'heading3',
             text: 'header 3 text',
-            textStyle: 'heading3Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'heading4',
             text: 'header 4 text',
-            textStyle: 'heading4Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'heading5',
             text: 'header 5 text',
-            textStyle: 'heading5Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'heading6',
             text: 'header 6 text',
-            textStyle: 'heading6Style',
             additions: [],
             inlineTextStyles: []
           },
           {
             role: 'body',
             text: 'link\nnormal text bold text italic text bold italic text marked text\n',
-            textStyle: 'bodyStyle',
             additions: [
               {
                 'type': 'link',
@@ -228,7 +219,6 @@ test('apple news format', t => {
           {
             role: 'body',
             text: 'other text\n',
-            textStyle: 'bodyStyle',
             additions: [],
             inlineTextStyles: []
           }
@@ -237,7 +227,6 @@ test('apple news format', t => {
       }
     ]
   };
-
   t.deepEqual(expected.components, article.components);
   t.deepEqual(expected.componentTextStyles, article.componentTextStyles);
   t.deepEqual(expected.textStyles, article.textStyles);
@@ -339,7 +328,6 @@ test('embeds', t => {
   const caption = {
     role: 'caption',
     text: 'link\nnormal text bold text italic text bold italic text marked text\n',
-    textStyle: 'captionStyle',
     additions: [
       {
         'type': 'link',
@@ -502,19 +490,16 @@ test('header with image', t => {
       }, {
         role: 'caption',
         text: 'normal text\n',
-        textStyle: 'captionStyle',
         additions: [],
         inlineTextStyles: []
       }]
     }, {
       role: 'title',
       layout: 'bodyLayout',
-      text: 'Beep boop',
-      textStyle: 'titleStyle'
+      text: 'Beep boop'
     }, {
       role: 'byline',
       text: 'By Sergii Iefremov March 22, 1985',
-      textStyle: 'bylineStyle',
       additions: [{
         type: 'link',
         rangeStart: 3,
