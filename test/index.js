@@ -99,7 +99,9 @@ test('apple news format', t => {
       'default-heading6': {
         fontName: 'HelveticaNeue-Bold',
         fontSize: 11
-      }
+      },
+      headerCaptionTextStyle: {},
+      embedCaptionTextStyle: {}
     },
     textStyles: {
       bodyBoldStyle: {
@@ -114,15 +116,19 @@ test('apple news format', t => {
       bodyLinkTextStyle: {
         textColor: '#48BFEE',
         underline: true
-      }
+      },
+      headerCaptionTextStyle: {},
+      embedCaptionTextStyle: {}
     },
     components: [
       {
         role: 'header',
+        layout: 'headerLayout',
+        style: 'headerStyle',
         components: [
           {
             role: 'title',
-            layout: 'bodyLayout',
+            layout: 'titleLayout',
             text: 'Article Title'
           },
           {
@@ -139,7 +145,7 @@ test('apple news format', t => {
               rangeLength: 16,
               textStyle: 'bodyLinkTextStyle'
             }],
-            layout: 'bodyLayout'
+            layout: 'bylineLayout'
           }
         ]
       },
@@ -150,37 +156,43 @@ test('apple news format', t => {
             role: 'heading1',
             text: 'header 1 text',
             additions: [],
-            inlineTextStyles: []
+            inlineTextStyles: [],
+            layout: 'bodyLayout'
           },
           {
             role: 'heading2',
             text: 'header 2 text',
             additions: [],
-            inlineTextStyles: []
+            inlineTextStyles: [],
+            layout: 'bodyLayout'
           },
           {
             role: 'heading3',
             text: 'header 3 text',
             additions: [],
-            inlineTextStyles: []
+            inlineTextStyles: [],
+            layout: 'bodyLayout'
           },
           {
             role: 'heading4',
             text: 'header 4 text',
             additions: [],
-            inlineTextStyles: []
+            inlineTextStyles: [],
+            layout: 'bodyLayout'
           },
           {
             role: 'heading5',
             text: 'header 5 text',
             additions: [],
-            inlineTextStyles: []
+            inlineTextStyles: [],
+            layout: 'bodyLayout'
           },
           {
             role: 'heading6',
             text: 'header 6 text',
             additions: [],
-            inlineTextStyles: []
+            inlineTextStyles: [],
+            layout: 'bodyLayout'
           },
           {
             role: 'body',
@@ -214,16 +226,20 @@ test('apple news format', t => {
                 'rangeLength': 17,
                 'textStyle': 'bodyBoldItalicStyle'
               }
-            ]
+            ],
+            layout: 'bodyLayout'
           },
           {
             role: 'body',
             text: 'other text\n',
             additions: [],
-            inlineTextStyles: []
+            inlineTextStyles: [],
+            layout: 'bodyLayout'
           }
         ],
-        layout: 'bodyLayout'
+        layout: {
+          ignoreDocumentMargin: true
+        }
       }
     ]
   };
@@ -357,7 +373,9 @@ test('embeds', t => {
         'rangeLength': 17,
         'textStyle': 'bodyBoldItalicStyle'
       }
-    ]
+    ],
+    layout: 'embedCaptionLayout',
+    textStyle: 'embedCaptionTextStyle'
   };
 
   const expectedComponents = [
@@ -366,40 +384,56 @@ test('embeds', t => {
       components: [
         {
           role: 'instagram',
-          URL: 'https://instagram.com/p/BDvcE47g6Ed'
+          URL: 'https://instagram.com/p/BDvcE47g6Ed',
+          style: 'embedMediaStyle',
+          layout: 'embedMediaLayout'
         },
         caption
-      ]
+      ],
+      layout: 'embedLayout',
+      style: 'embedStyle'
     },
     {
       role: 'container',
       components: [
         {
           role: 'tweet',
-          URL: 'https://twitter.com/randal_olson/status/709090467821064196'
+          URL: 'https://twitter.com/randal_olson/status/709090467821064196',
+          style: 'embedMediaStyle',
+          layout: 'embedMediaLayout'
         },
         caption
-      ]
+      ],
+      layout: 'embedLayout',
+      style: 'embedStyle'
     },
     {
       role: 'container',
       components: [
         {
           role: 'embedwebvideo',
-          URL: 'https://www.youtube.com/embed/oo6D4MXrJ5c'
+          URL: 'https://www.youtube.com/embed/oo6D4MXrJ5c',
+          style: 'embedMediaStyle',
+          layout: 'embedMediaLayout'
         },
         caption
-      ]
+      ],
+      layout: 'embedLayout',
+      style: 'embedStyle'
     },
     {
       role: 'container',
       components: [
         {
           role: 'photo',
-          URL: 'bundle://image.jpg'
+          URL: 'bundle://image.jpg',
+          style: 'embedMediaStyle',
+          layout: 'embedMediaLayout'
         },
         caption
-      ]
+      ],
+      layout: 'embedLayout',
+      style: 'embedStyle'
     }
   ];
 
@@ -411,15 +445,21 @@ test('images', t => {
   const expectedComponents = [
     {
       role: 'container',
-      components: [{role: 'photo', URL: 'bundle://image-0.jpg'}]
+      components: [{role: 'photo', URL: 'bundle://image-0.jpg', style: 'embedMediaStyle', layout: 'embedMediaLayout'}],
+      layout: 'embedLayout',
+      style: 'embedStyle'
     },
     {
       role: 'container',
-      components: [{role: 'photo', URL: 'bundle://image-1.png'}]
+      components: [{role: 'photo', URL: 'bundle://image-1.png', style: 'embedMediaStyle', layout: 'embedMediaLayout'}],
+      layout: 'embedLayout',
+      style: 'embedStyle'
     },
     {
       role: 'container',
-      components: [{role: 'photo', URL: 'bundle://image-0.jpg'}]
+      components: [{role: 'photo', URL: 'bundle://image-0.jpg', style: 'embedMediaStyle', layout: 'embedMediaLayout'}],
+      layout: 'embedLayout',
+      style: 'embedStyle'
     }
   ];
   const expectedBundlesToUrls = {
@@ -482,20 +522,28 @@ test('header with image', t => {
   const actual = article.components[0];
   const expected = {
     role: 'header',
+    layout: 'headerLayout',
+    style: 'headerStyle',
     components: [{
       role: 'container',
       components: [{
         role: 'photo',
-        URL: 'bundle://image.jpg'
+        URL: 'bundle://image.jpg',
+        style: 'headerEmbedMediaStyle',
+        layout: 'headerEmbedMediaLayout'
       }, {
         role: 'caption',
         text: 'normal text\n',
         additions: [],
-        inlineTextStyles: []
-      }]
+        inlineTextStyles: [],
+        layout: 'headerCaptionLayout',
+        textStyle: 'headerCaptionTextStyle'
+      }],
+      layout: 'headerEmbedLayout',
+      style: 'headerEmbedStyle'
     }, {
       role: 'title',
-      layout: 'bodyLayout',
+      layout: 'titleLayout',
       text: 'Beep boop'
     }, {
       role: 'byline',
@@ -511,7 +559,7 @@ test('header with image', t => {
         rangeLength: 15,
         textStyle: 'bodyLinkTextStyle'
       }],
-      layout: 'bodyLayout'
+      layout: 'bylineLayout'
     }]
   };
 
