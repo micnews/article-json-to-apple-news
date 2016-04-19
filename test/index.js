@@ -101,7 +101,8 @@ test('apple news format', t => {
         fontSize: 11
       },
       headerCaptionTextStyle: {},
-      embedCaptionTextStyle: {}
+      embedCaptionTextStyle: {},
+      quoteStyle: {}
     },
     textStyles: {
       bodyBoldStyle: {
@@ -118,7 +119,8 @@ test('apple news format', t => {
         underline: true
       },
       headerCaptionTextStyle: {},
-      embedCaptionTextStyle: {}
+      embedCaptionTextStyle: {},
+      quoteStyle: {}
     },
     components: [
       {
