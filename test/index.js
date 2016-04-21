@@ -21,7 +21,7 @@ test('apple news format', t => {
     },
     publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
-      { type: 'header1', children: [{ type: 'text', content: 'header 1 text' }] },
+      { type: 'header1', children: [{ type: 'text', content: 'header 1 text' }, { type: 'text', content: '1', bold: true }] },
       { type: 'header2', children: [{ type: 'text', content: 'header 2 text' }] },
       { type: 'header3', children: [{ type: 'text', content: 'header 3 text' }] },
       { type: 'header4', children: [{ type: 'text', content: 'header 4 text' }] },
@@ -142,7 +142,6 @@ test('apple news format', t => {
             text: 'Article Title'
           },
           {
-            role: 'byline',
             text: 'By David Hipsterson February 4, 2016',
             additions: [{
               type: 'link',
@@ -155,6 +154,7 @@ test('apple news format', t => {
               rangeLength: 16,
               textStyle: 'bodyLinkTextStyle'
             }],
+            role: 'byline',
             layout: 'bylineLayout'
           }
         ]
@@ -164,7 +164,7 @@ test('apple news format', t => {
         components: [
           {
             role: 'heading1',
-            text: 'header 1 text',
+            text: 'header 1 text1',
             additions: [],
             inlineTextStyles: [],
             layout: 'bodyLayout'
@@ -564,7 +564,6 @@ test('header with image', t => {
       layout: 'titleLayout',
       text: 'Beep boop'
     }, {
-      role: 'byline',
       text: 'By Sergii Iefremov March 22, 1985',
       additions: [{
         type: 'link',
@@ -577,6 +576,7 @@ test('header with image', t => {
         rangeLength: 15,
         textStyle: 'bodyLinkTextStyle'
       }],
+      role: 'byline',
       layout: 'bylineLayout'
     }]
   };
@@ -641,7 +641,6 @@ test('custom hero component and image hero embed', t => {
     style: 'headerStyle',
     components: [
       customHero, {
-        role: 'byline',
         text: 'By Sergii Iefremov March 22, 1985',
         additions: [{
           type: 'link',
@@ -654,6 +653,7 @@ test('custom hero component and image hero embed', t => {
           rangeLength: 15,
           textStyle: 'bodyLinkTextStyle'
         }],
+        role: 'byline',
         layout: 'bylineLayout'
       }
     ]
@@ -691,7 +691,6 @@ test('custom hero component and no hero embed', t => {
     style: 'headerStyle',
     components: [
       customHero, {
-        role: 'byline',
         text: 'By Sergii Iefremov March 22, 1985',
         additions: [{
           type: 'link',
@@ -704,6 +703,7 @@ test('custom hero component and no hero embed', t => {
           rangeLength: 15,
           textStyle: 'bodyLinkTextStyle'
         }],
+        role: 'byline',
         layout: 'bylineLayout'
       }
     ]
