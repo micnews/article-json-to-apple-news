@@ -29,14 +29,16 @@ test('apple news format', t => {
       { type: 'header6', children: [{ type: 'text', content: 'header 6 text' }] },
       { type: 'paragraph',
         children: [
-          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'text', href: '//mic.com', content: 'link' },
           { type: 'linebreak' },
           { type: 'text', content: 'normal text ' },
           { type: 'text', bold: true, content: 'bold text ' },
           { type: 'text', italic: true, content: 'italic text ' },
           { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
           { type: 'text', mark: true, content: 'marked text' },
-          { type: 'text', mark: true, markClass: 'marker1' }
+          { type: 'text', mark: true, markClass: 'marker1' },
+          { type: 'text', href: 'http://mic.com', content: 'link2' },
+          { type: 'text', href: 'https://mic.com', content: 'link3' }
         ]
       },
       { type: 'blockquote',
@@ -206,13 +208,25 @@ test('apple news format', t => {
           },
           {
             role: 'body',
-            text: 'link\nnormal text bold text italic text bold italic text marked text\n',
+            text: 'link\nnormal text bold text italic text bold italic text marked textlink2link3\n',
             additions: [
               {
                 'type': 'link',
                 'rangeStart': 0,
                 'rangeLength': 4,
+                'URL': 'https://mic.com'
+              },
+              {
+                'type': 'link',
+                'rangeStart': 67,
+                'rangeLength': 5,
                 'URL': 'http://mic.com'
+              },
+              {
+                'type': 'link',
+                'rangeStart': 72,
+                'rangeLength': 5,
+                'URL': 'https://mic.com'
               }
             ],
             'inlineTextStyles': [
@@ -235,6 +249,16 @@ test('apple news format', t => {
                 'rangeStart': 39,
                 'rangeLength': 17,
                 'textStyle': 'bodyBoldItalicStyle'
+              },
+              {
+                'rangeStart': 67,
+                'rangeLength': 5,
+                'textStyle': 'bodyLinkTextStyle'
+              },
+              {
+                'rangeStart': 72,
+                'rangeLength': 5,
+                'textStyle': 'bodyLinkTextStyle'
               }
             ],
             layout: 'bodyLayout'
