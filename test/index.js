@@ -344,8 +344,8 @@ test('embeds', t => {
   writeAppleNewsArticle(actual, 'embeds');
 
   const caption = {
-    role: 'caption',
     text: 'link\nnormal text bold text italic text bold italic text marked text\n',
+    textStyle: 'embedCaptionTextStyle',
     additions: [
       {
         'type': 'link',
@@ -354,30 +354,28 @@ test('embeds', t => {
         'URL': 'http://mic.com'
       }
     ],
-    'inlineTextStyles': [
+    inlineTextStyles: [
       {
-        'rangeStart': 0,
-        'rangeLength': 4,
-        'textStyle': 'bodyLinkTextStyle'
+        rangeStart: 0,
+        rangeLength: 4,
+        textStyle: 'embedCaptionTextStyle'
       },
       {
-        'rangeStart': 17,
-        'rangeLength': 10,
-        'textStyle': 'bodyBoldStyle'
+        rangeStart: 17,
+        rangeLength: 10,
+        textStyle: 'embedCaptionTextStyle'
       },
       {
-        'rangeStart': 27,
-        'rangeLength': 12,
-        'textStyle': 'bodyItalicStyle'
+        rangeStart: 27,
+        rangeLength: 12,
+        textStyle: 'embedCaptionTextStyle'
       },
       {
-        'rangeStart': 39,
-        'rangeLength': 17,
-        'textStyle': 'bodyBoldItalicStyle'
+        rangeStart: 39,
+        rangeLength: 17,
+        textStyle: 'embedCaptionTextStyle'
       }
-    ],
-    layout: 'embedCaptionLayout',
-    textStyle: 'embedCaptionTextStyle'
+    ]
   };
 
   const expectedComponents = [
@@ -389,8 +387,7 @@ test('embeds', t => {
           URL: 'https://instagram.com/p/BDvcE47g6Ed',
           style: 'embedMediaStyle',
           layout: 'embedMediaLayout'
-        },
-        caption
+        }
       ],
       layout: 'embedLayout',
       style: 'embedStyle'
@@ -403,8 +400,7 @@ test('embeds', t => {
           URL: 'https://twitter.com/randal_olson/status/709090467821064196',
           style: 'embedMediaStyle',
           layout: 'embedMediaLayout'
-        },
-        caption
+        }
       ],
       layout: 'embedLayout',
       style: 'embedStyle'
@@ -417,8 +413,7 @@ test('embeds', t => {
           URL: 'https://www.youtube.com/embed/oo6D4MXrJ5c',
           style: 'embedMediaStyle',
           layout: 'embedMediaLayout'
-        },
-        caption
+        }
       ],
       layout: 'embedLayout',
       style: 'embedStyle'
@@ -430,9 +425,9 @@ test('embeds', t => {
           role: 'photo',
           URL: 'bundle://image.jpg',
           style: 'embedMediaStyle',
-          layout: 'embedMediaLayout'
-        },
-        caption
+          layout: 'embedMediaLayout',
+          caption
+        }
       ],
       layout: 'embedLayout',
       style: 'embedStyle'
@@ -532,14 +527,13 @@ test('header with image', t => {
         role: 'photo',
         URL: 'bundle://image.jpg',
         style: 'headerEmbedMediaStyle',
-        layout: 'headerEmbedMediaLayout'
-      }, {
-        role: 'caption',
-        text: 'normal text\n',
-        additions: [],
-        inlineTextStyles: [],
-        layout: 'headerCaptionLayout',
-        textStyle: 'headerCaptionTextStyle'
+        layout: 'headerEmbedMediaLayout',
+        caption: {
+          text: 'normal text\n',
+          additions: [],
+          inlineTextStyles: [],
+          textStyle: 'headerCaptionTextStyle'
+        }
       }],
       layout: 'headerEmbedLayout',
       style: 'headerEmbedStyle'
@@ -587,6 +581,114 @@ test('empty text element should not be rendered', t => {
 
   const {article} = toAppleNews(data, {identifier: '100'});
   t.deepEqual(article.components[1].components, []);
+});
+
+test('custom hero component and image hero embed', t => {
+  const data = {
+    title: 'Beep boop',
+    author: {
+      name: 'Sergii Iefremov',
+      href: 'http://mic.com/'
+    },
+    publishedDate: new Date('1985-03-22'),
+    headerEmbed: {
+      type: 'embed',
+      embedType: 'image',
+      src: 'bundle://image.jpg',
+      caption: [
+        { type: 'text', content: 'normal text' }
+      ]
+    },
+    body: []
+  };
+
+  const customHero = {
+    role: 'container',
+    text: 'custom'
+  };
+
+  const {article} = toAppleNews(data, {
+    identifier: '100',
+    heroComponent: customHero
+  });
+
+  const actual = article.components[0];
+  const expected = {
+    role: 'header',
+    layout: 'headerLayout',
+    style: 'headerStyle',
+    components: [
+      customHero, {
+        role: 'byline',
+        text: 'By Sergii Iefremov March 22, 1985',
+        additions: [{
+          type: 'link',
+          rangeStart: 3,
+          rangeLength: 15,
+          URL: 'http://mic.com/'
+        }],
+        inlineTextStyles: [{
+          rangeStart: 3,
+          rangeLength: 15,
+          textStyle: 'bodyLinkTextStyle'
+        }],
+        layout: 'bylineLayout'
+      }
+    ]
+  };
+
+  writeAppleNewsArticle(article, 'header-with-image');
+  t.deepEqual(actual, expected);
+});
+
+test('custom hero component and no hero embed', t => {
+  const data = {
+    title: 'Beep boop',
+    author: {
+      name: 'Sergii Iefremov',
+      href: 'http://mic.com/'
+    },
+    publishedDate: new Date('1985-03-22'),
+    body: []
+  };
+
+  const customHero = {
+    role: 'container',
+    text: 'custom'
+  };
+
+  const {article} = toAppleNews(data, {
+    identifier: '100',
+    heroComponent: customHero
+  });
+
+  const actual = article.components[0];
+  const expected = {
+    role: 'header',
+    layout: 'headerLayout',
+    style: 'headerStyle',
+    components: [
+      customHero, {
+        role: 'byline',
+        text: 'By Sergii Iefremov March 22, 1985',
+        additions: [{
+          type: 'link',
+          rangeStart: 3,
+          rangeLength: 15,
+          URL: 'http://mic.com/'
+        }],
+        inlineTextStyles: [{
+          rangeStart: 3,
+          rangeLength: 15,
+          textStyle: 'bodyLinkTextStyle'
+        }],
+        layout: 'bylineLayout'
+      }
+    ]
+  };
+
+  writeAppleNewsArticle(article, 'header-with-image');
+  t.deepEqual(actual, expected);
 });
 
 test('metadata', t => {
