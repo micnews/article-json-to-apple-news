@@ -39,6 +39,13 @@ test('apple news format', t => {
           { type: 'text', mark: true, markClass: 'marker1' }
         ]
       },
+      { type: 'blockquote',
+        children: [
+          { type: 'paragraph', children: [
+            { type: 'text', content: 'block quote text' }
+          ] }
+        ]
+      },
       { type: 'paragraph',
         children: [
           { type: 'text', content: 'other text' }
@@ -102,7 +109,8 @@ test('apple news format', t => {
       },
       headerCaptionTextStyle: {},
       embedCaptionTextStyle: {},
-      quoteStyle: {}
+      quoteStyle: {},
+      quoteTextStyle: {}
     },
     textStyles: {
       bodyBoldStyle: {
@@ -120,7 +128,7 @@ test('apple news format', t => {
       },
       headerCaptionTextStyle: {},
       embedCaptionTextStyle: {},
-      quoteStyle: {}
+      quoteTextStyle: {}
     },
     components: [
       {
@@ -230,6 +238,20 @@ test('apple news format', t => {
               }
             ],
             layout: 'bodyLayout'
+          },
+          {
+            role: 'container',
+            layout: 'quoteLayout',
+            style: 'quoteStyle',
+            components: [{
+              role: 'quote',
+              text: 'block quote text',
+              additions: [],
+              inlineTextStyles: [],
+              textStyle: 'quoteTextStyle',
+              layout: 'quoteTextLayout',
+              style: 'quoteTextStyle'
+            }]
           },
           {
             role: 'body',
