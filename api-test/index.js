@@ -64,7 +64,7 @@ PUBLISH_TEST('simple article', {
   },
   publishedDate: new Date('2016-02-04T14:00:00Z'),
   body: [
-    { type: 'header1', children: [{ type: 'text', content: 'header 1 text' }] },
+    { type: 'header1', children: [{ type: 'text', content: 'header 1 text' }, { type: 'text', content: '1', bold: true }] },
     { type: 'header2', children: [{ type: 'text', content: 'header 2 text' }] },
     { type: 'header3', children: [{ type: 'text', content: 'header 3 text' }] },
     { type: 'header4', children: [{ type: 'text', content: 'header 4 text' }] },
