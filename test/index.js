@@ -29,7 +29,7 @@ test('apple news format', t => {
       { type: 'header6', children: [{ type: 'text', content: 'header 6 text' }] },
       { type: 'paragraph',
         children: [
-          { type: 'text', href: 'http://mic.com', content: 'link' },
+          { type: 'text', href: '//mic.com', content: 'link' },
           { type: 'linebreak' },
           { type: 'text', content: 'normal text ' },
           { type: 'text', bold: true, content: 'bold text ' },
@@ -212,7 +212,7 @@ test('apple news format', t => {
                 'type': 'link',
                 'rangeStart': 0,
                 'rangeLength': 4,
-                'URL': 'http://mic.com'
+                'URL': 'https://mic.com'
               }
             ],
             'inlineTextStyles': [
