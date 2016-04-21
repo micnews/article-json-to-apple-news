@@ -36,7 +36,9 @@ test('apple news format', t => {
           { type: 'text', italic: true, content: 'italic text ' },
           { type: 'text', bold: true, italic: true, content: 'bold italic text ' },
           { type: 'text', mark: true, content: 'marked text' },
-          { type: 'text', mark: true, markClass: 'marker1' }
+          { type: 'text', mark: true, markClass: 'marker1' },
+          { type: 'text', href: 'http://mic.com', content: 'link2' },
+          { type: 'text', href: 'https://mic.com', content: 'link3' }
         ]
       },
       { type: 'blockquote',
@@ -206,12 +208,24 @@ test('apple news format', t => {
           },
           {
             role: 'body',
-            text: 'link\nnormal text bold text italic text bold italic text marked text\n',
+            text: 'link\nnormal text bold text italic text bold italic text marked textlink2link3\n',
             additions: [
               {
                 'type': 'link',
                 'rangeStart': 0,
                 'rangeLength': 4,
+                'URL': 'https://mic.com'
+              },
+              {
+                'type': 'link',
+                'rangeStart': 67,
+                'rangeLength': 5,
+                'URL': 'http://mic.com'
+              },
+              {
+                'type': 'link',
+                'rangeStart': 72,
+                'rangeLength': 5,
                 'URL': 'https://mic.com'
               }
             ],
@@ -235,6 +249,16 @@ test('apple news format', t => {
                 'rangeStart': 39,
                 'rangeLength': 17,
                 'textStyle': 'bodyBoldItalicStyle'
+              },
+              {
+                'rangeStart': 67,
+                'rangeLength': 5,
+                'textStyle': 'bodyLinkTextStyle'
+              },
+              {
+                'rangeStart': 72,
+                'rangeLength': 5,
+                'textStyle': 'bodyLinkTextStyle'
               }
             ],
             layout: 'bodyLayout'
