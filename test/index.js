@@ -38,8 +38,10 @@ test('apple news format', t => {
           { type: 'text', mark: true, content: 'marked text' },
           { type: 'text', mark: true, markClass: 'marker1' },
           { type: 'text', href: 'http://mic.com', content: 'link2' },
-          { type: 'text', href: 'https://mic.com', content: 'link3' },
-          { type: 'text', href: 'https://en.wikipedia.org/wiki/Crêpe', content: 'link4' }
+          { type: 'text', href: ' https://mic.com', content: 'link3' },
+          { type: 'text', href: 'https://en.wikipedia.org/wiki/Crêpe', content: 'link4' },
+          { type: 'text', href: 'https://example.com/and-space-after ', content: 'link5' },
+          { type: 'text', href: '  example.com/no-protocol ', content: 'link6' }
         ]
       },
       { type: 'blockquote',
@@ -209,7 +211,7 @@ test('apple news format', t => {
           },
           {
             role: 'body',
-            text: 'link\nnormal text bold text italic text bold italic text marked textlink2link3link4\n',
+            text: 'link\nnormal text bold text italic text bold italic text marked textlink2link3link4link5link6\n',
             additions: [
               {
                 'type': 'link',
@@ -234,6 +236,18 @@ test('apple news format', t => {
                 'rangeStart': 77,
                 'rangeLength': 5,
                 'URL': 'https://en.wikipedia.org/wiki/Cr%C3%AApe'
+              },
+              {
+                'type': 'link',
+                'rangeStart': 82,
+                'rangeLength': 5,
+                'URL': 'https://example.com/and-space-after'
+              },
+              {
+                'type': 'link',
+                'rangeStart': 87,
+                'rangeLength': 5,
+                'URL': 'http://example.com/no-protocol'
               }
             ],
             'inlineTextStyles': [
@@ -269,6 +283,16 @@ test('apple news format', t => {
               },
               {
                 'rangeStart': 77,
+                'rangeLength': 5,
+                'textStyle': 'bodyLinkTextStyle'
+              },
+              {
+                'rangeStart': 82,
+                'rangeLength': 5,
+                'textStyle': 'bodyLinkTextStyle'
+              },
+              {
+                'rangeStart': 87,
                 'rangeLength': 5,
                 'textStyle': 'bodyLinkTextStyle'
               }
@@ -367,6 +391,18 @@ test('embeds', t => {
       },
       {
         type: 'embed',
+        embedType: 'twitter',
+        url: 'https://twitter.com/Kevunn/status/724060483213385729/photo/1',
+        caption: []
+      },
+      {
+        type: 'embed',
+        embedType: 'twitter',
+        url: 'https://twitter.com/invalid-url',
+        caption: []
+      },
+      {
+        type: 'embed',
         embedType: 'youtube',
         youtubeId: 'oo6D4MXrJ5c',
         caption: [
@@ -394,6 +430,11 @@ test('embeds', t => {
           { type: 'text', mark: true, content: 'marked text' },
           { type: 'text', mark: true, markClass: 'marker1' }
         ]
+      },
+      {
+        type: 'embed',
+        embedType: 'video',
+        src: 'http://mic.com/video.gif'
       }
     ]
   };
@@ -467,6 +508,19 @@ test('embeds', t => {
       role: 'container',
       components: [
         {
+          role: 'tweet',
+          URL: 'https://twitter.com/Kevunn/status/724060483213385729',
+          style: 'embedMediaStyle',
+          layout: 'embedMediaLayout'
+        }
+      ],
+      layout: 'embedLayout',
+      style: 'embedStyle'
+    },
+    {
+      role: 'container',
+      components: [
+        {
           role: 'embedwebvideo',
           URL: 'https://www.youtube.com/embed/oo6D4MXrJ5c',
           style: 'embedMediaStyle',
@@ -485,6 +539,19 @@ test('embeds', t => {
           style: 'embedMediaStyle',
           layout: 'embedMediaLayout',
           caption
+        }
+      ],
+      layout: 'embedLayout',
+      style: 'embedStyle'
+    },
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'video',
+          URL: 'http://mic.com/video.gif',
+          style: 'embedMediaStyle',
+          layout: 'embedMediaLayout'
         }
       ],
       layout: 'embedLayout',
