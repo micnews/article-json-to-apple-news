@@ -82,6 +82,18 @@ PUBLISH_TEST('simple article', {
         { type: 'text', mark: true, markClass: 'marker1' }
       ]
     },
+    {
+      type: 'embed',
+      embedType: 'twitter',
+      url: 'https://twitter.com/Kevunn/status/724060483213385729/photo/1',
+      caption: []
+    },
+    {
+      type: 'embed',
+      embedType: 'twitter',
+      url: 'https://twitter.com/invalid-url',
+      caption: []
+    },
     { type: 'blockquote',
       children: [
         { type: 'paragraph', children: [

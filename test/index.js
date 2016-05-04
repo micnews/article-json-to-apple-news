@@ -391,6 +391,18 @@ test('embeds', t => {
       },
       {
         type: 'embed',
+        embedType: 'twitter',
+        url: 'https://twitter.com/Kevunn/status/724060483213385729/photo/1',
+        caption: []
+      },
+      {
+        type: 'embed',
+        embedType: 'twitter',
+        url: 'https://twitter.com/invalid-url',
+        caption: []
+      },
+      {
+        type: 'embed',
         embedType: 'youtube',
         youtubeId: 'oo6D4MXrJ5c',
         caption: [
@@ -480,6 +492,19 @@ test('embeds', t => {
         {
           role: 'tweet',
           URL: 'https://twitter.com/randal_olson/status/709090467821064196',
+          style: 'embedMediaStyle',
+          layout: 'embedMediaLayout'
+        }
+      ],
+      layout: 'embedLayout',
+      style: 'embedStyle'
+    },
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'tweet',
+          URL: 'https://twitter.com/Kevunn/status/724060483213385729',
           style: 'embedMediaStyle',
           layout: 'embedMediaLayout'
         }
