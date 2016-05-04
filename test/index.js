@@ -430,6 +430,11 @@ test('embeds', t => {
           { type: 'text', mark: true, content: 'marked text' },
           { type: 'text', mark: true, markClass: 'marker1' }
         ]
+      },
+      {
+        type: 'embed',
+        embedType: 'video',
+        src: 'http://mic.com/video.gif'
       }
     ]
   };
@@ -534,6 +539,19 @@ test('embeds', t => {
           style: 'embedMediaStyle',
           layout: 'embedMediaLayout',
           caption
+        }
+      ],
+      layout: 'embedLayout',
+      style: 'embedStyle'
+    },
+    {
+      role: 'container',
+      components: [
+        {
+          role: 'video',
+          URL: 'http://mic.com/video.gif',
+          style: 'embedMediaStyle',
+          layout: 'embedMediaLayout'
         }
       ],
       layout: 'embedLayout',

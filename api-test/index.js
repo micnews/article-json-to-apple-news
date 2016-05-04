@@ -84,6 +84,11 @@ PUBLISH_TEST('simple article', {
     },
     {
       type: 'embed',
+      embedType: 'video',
+      src: 'http://thumbs.mic.com/OGYxNzk0YzUyYiMvRDNVUlRpM1FwU3pXMVROQ0ltYURLT29GWmtNPS9maWx0ZXJzOmZpbHRlcnM6Z2lmdigpL2h0dHA6Ly90aHVtYnMubWljLmNvbS9Nak5rTWpjMk9EUTRNeU12U1Zkb1luaEpWM0puVkhwWFUyeFdZMEZsVnkxcFZrRkdPRFIzUFM5bWFYUXRhVzR2T1RBd2VEa3dNQzltYVd4MFpYSnpPbTV2WDNWd2MyTmhiR1VvS1RweGRXRnNhWFI1S0Rnd0tTOW9kSFJ3T2k4dmFXMWhaMlZ6TG0xcFl5NWpiMjB2YUdoblltVnBZMnhyZG5obE1uWnBlWFZwY25JME5XMDRibWgwWjJ0Mk0yaDZabTUxWm0xa2NXbDNaakZ6Y2pVd1kyTnhPR0poY0hKMk0zUTFOV0k1ZHk1bmFXWS5naWY.gif'
+    },
+    {
+      type: 'embed',
       embedType: 'twitter',
       url: 'https://twitter.com/Kevunn/status/724060483213385729/photo/1',
       caption: []
