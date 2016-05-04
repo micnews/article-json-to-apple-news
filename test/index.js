@@ -39,7 +39,8 @@ test('apple news format', t => {
           { type: 'text', mark: true, markClass: 'marker1' },
           { type: 'text', href: 'http://mic.com', content: 'link2' },
           { type: 'text', href: 'https://mic.com', content: 'link3' },
-          { type: 'text', href: 'https://en.wikipedia.org/wiki/Crêpe', content: 'link4' }
+          { type: 'text', href: 'https://en.wikipedia.org/wiki/Crêpe', content: 'link4' },
+          { type: 'text', href: 'https://example.com/and-space-after ', content: 'link5' }
         ]
       },
       { type: 'blockquote',
@@ -209,7 +210,7 @@ test('apple news format', t => {
           },
           {
             role: 'body',
-            text: 'link\nnormal text bold text italic text bold italic text marked textlink2link3link4\n',
+            text: 'link\nnormal text bold text italic text bold italic text marked textlink2link3link4link5\n',
             additions: [
               {
                 'type': 'link',
@@ -234,6 +235,12 @@ test('apple news format', t => {
                 'rangeStart': 77,
                 'rangeLength': 5,
                 'URL': 'https://en.wikipedia.org/wiki/Cr%C3%AApe'
+              },
+              {
+                'type': 'link',
+                'rangeStart': 82,
+                'rangeLength': 5,
+                'URL': 'https://example.com/and-space-after'
               }
             ],
             'inlineTextStyles': [
@@ -269,6 +276,11 @@ test('apple news format', t => {
               },
               {
                 'rangeStart': 77,
+                'rangeLength': 5,
+                'textStyle': 'bodyLinkTextStyle'
+              },
+              {
+                'rangeStart': 82,
                 'rangeLength': 5,
                 'textStyle': 'bodyLinkTextStyle'
               }
