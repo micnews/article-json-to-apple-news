@@ -38,7 +38,7 @@ test('apple news format', t => {
           { type: 'text', mark: true, content: 'marked text' },
           { type: 'text', mark: true, markClass: 'marker1' },
           { type: 'text', href: 'http://mic.com', content: 'link2' },
-          { type: 'text', href: 'https://mic.com', content: 'link3' },
+          { type: 'text', href: ' https://mic.com', content: 'link3' },
           { type: 'text', href: 'https://en.wikipedia.org/wiki/Crêpe', content: 'link4' },
           { type: 'text', href: 'https://example.com/and-space-after ', content: 'link5' },
           { type: 'text', href: '  example.com/no-protocol ', content: 'link6' }
