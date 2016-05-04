@@ -87,7 +87,8 @@ PUBLISH_TEST('simple article', {
         { type: 'paragraph', children: [
           { type: 'text', content: 'block quote text ' },
           { type: 'text', content: ' and a link', href: 'http://mic.com' },
-          { type: 'text', content: ' and a link', href: 'http://mic.com ' } // space in href
+          { type: 'text', content: ' and a link', href: 'http://mic.com ' }, // space in href
+          { type: 'text', content: ' and another link', href: 'mic.com ' }  // link without protocol
         ] }
       ]
     },
