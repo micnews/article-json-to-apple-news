@@ -24,15 +24,15 @@
   "homepage": "https://github.com/micnews/article-json-to-apple-news#readme",
   "devDependencies": {
     "apple-news": "^1.0.0",
-    "ava": "^0.14.0",
+    "ava": "^0.15.2",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.5.2",
     "babel-preset-es2015": "^6.3.13",
     "chalk": "^1.1.3",
     "mkdirp": "^0.5.1",
-    "nyc": "^6.2.1",
-    "semistandard": "^7.0.5",
-    "snazzy": "^3.0.0"
+    "nyc": "^7.1.0",
+    "semistandard": "^8.0.0",
+    "snazzy": "^4.0.0"
   },
   "dependencies": {
     "lodash.startswith": "^4.0.1",
