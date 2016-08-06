@@ -24,7 +24,7 @@
   "homepage": "https://github.com/micnews/article-json-to-apple-news#readme",
   "devDependencies": {
     "apple-news": "^1.0.0",
-    "ava": "^0.15.2",
+    "ava": "^0.16.0",
     "babel-cli": "^6.4.5",
     "babel-core": "^6.5.2",
     "babel-preset-es2015": "^6.3.13",
