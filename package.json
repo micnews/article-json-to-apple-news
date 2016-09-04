@@ -31,7 +31,7 @@
     "chalk": "^1.1.3",
     "mkdirp": "^0.5.1",
     "nyc": "^8.1.0",
-    "semistandard": "^8.0.0",
+    "semistandard": "^9.0.0",
     "snazzy": "^4.0.0"
   },
   "dependencies": {

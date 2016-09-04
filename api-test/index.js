@@ -99,14 +99,18 @@ PUBLISH_TEST('simple article', {
       url: 'https://twitter.com/invalid-url',
       caption: []
     },
-    { type: 'blockquote',
+    {
+      type: 'blockquote',
       children: [
-        { type: 'paragraph', children: [
-          { type: 'text', content: 'block quote text ' },
-          { type: 'text', content: ' and a link', href: 'http://mic.com' },
-          { type: 'text', content: ' and a link', href: 'http://mic.com ' }, // space in href
-          { type: 'text', content: ' and another link', href: 'mic.com ' }  // link without protocol
-        ] }
+        {
+          type: 'paragraph',
+          children: [
+            { type: 'text', content: 'block quote text ' },
+            { type: 'text', content: ' and a link', href: 'http://mic.com' },
+            { type: 'text', content: ' and a link', href: 'http://mic.com ' }, // space in href
+            { type: 'text', content: ' and another link', href: 'mic.com ' }  // link without protocol
+          ]
+        }
       ]
     },
     { type: 'paragraph',

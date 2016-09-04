@@ -46,9 +46,12 @@ test('apple news format', t => {
       },
       { type: 'blockquote',
         children: [
-          { type: 'paragraph', children: [
-            { type: 'text', content: 'block quote text' }
-          ] }
+          {
+            type: 'paragraph',
+            children: [
+              { type: 'text', content: 'block quote text' }
+            ]
+          }
         ]
       },
       { type: 'paragraph',
@@ -696,11 +699,14 @@ test('empty text element should not be rendered', t => {
     },
     publishedDate: new Date('2016-02-04T14:00:00Z'),
     body: [
-      { type: 'paragraph', children: [
-        { type: 'text', content: '' },
-        { type: 'other', content: 'a' },
-        { type: 'text' }
-      ] }
+      {
+        type: 'paragraph',
+        children: [
+          { type: 'text', content: '' },
+          { type: 'other', content: 'a' },
+          { type: 'text' }
+        ]
+      }
     ]
   };
 
