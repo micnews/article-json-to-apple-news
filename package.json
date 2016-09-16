@@ -32,7 +32,7 @@
     "mkdirp": "^0.5.1",
     "nyc": "^8.1.0",
     "semistandard": "^9.0.0",
-    "snazzy": "^4.0.0"
+    "snazzy": "^5.0.0"
   },
   "dependencies": {
     "lodash.startswith": "^4.0.1",
