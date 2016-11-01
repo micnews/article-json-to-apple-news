@@ -168,167 +168,163 @@ test('apple news format', t => {
         ]
       },
       {
-        role: 'container',
-        components: [
+        role: 'heading1',
+        text: 'header 1 text1',
+        additions: [],
+        inlineTextStyles: [],
+        layout: 'bodyLayout'
+      },
+      {
+        role: 'heading2',
+        text: 'header 2 text',
+        additions: [],
+        inlineTextStyles: [],
+        layout: 'bodyLayout'
+      },
+      {
+        role: 'heading3',
+        text: 'header 3 text',
+        additions: [],
+        inlineTextStyles: [],
+        layout: 'bodyLayout'
+      },
+      {
+        role: 'heading4',
+        text: 'header 4 text',
+        additions: [],
+        inlineTextStyles: [],
+        layout: 'bodyLayout'
+      },
+      {
+        role: 'heading5',
+        text: 'header 5 text',
+        additions: [],
+        inlineTextStyles: [],
+        layout: 'bodyLayout'
+      },
+      {
+        role: 'heading6',
+        text: 'header 6 text',
+        additions: [],
+        inlineTextStyles: [],
+        layout: 'bodyLayout'
+      },
+      {
+        role: 'body',
+        text: 'link\nnormal text bold text italic text bold italic text marked textlink2link3link4link5link6\n',
+        additions: [
           {
-            role: 'heading1',
-            text: 'header 1 text1',
-            additions: [],
-            inlineTextStyles: [],
-            layout: 'bodyLayout'
+            'type': 'link',
+            'rangeStart': 0,
+            'rangeLength': 4,
+            'URL': 'https://mic.com'
           },
           {
-            role: 'heading2',
-            text: 'header 2 text',
-            additions: [],
-            inlineTextStyles: [],
-            layout: 'bodyLayout'
+            'type': 'link',
+            'rangeStart': 67,
+            'rangeLength': 5,
+            'URL': 'http://mic.com'
           },
           {
-            role: 'heading3',
-            text: 'header 3 text',
-            additions: [],
-            inlineTextStyles: [],
-            layout: 'bodyLayout'
+            'type': 'link',
+            'rangeStart': 72,
+            'rangeLength': 5,
+            'URL': 'https://mic.com'
           },
           {
-            role: 'heading4',
-            text: 'header 4 text',
-            additions: [],
-            inlineTextStyles: [],
-            layout: 'bodyLayout'
+            'type': 'link',
+            'rangeStart': 77,
+            'rangeLength': 5,
+            'URL': 'https://en.wikipedia.org/wiki/Cr%C3%AApe'
           },
           {
-            role: 'heading5',
-            text: 'header 5 text',
-            additions: [],
-            inlineTextStyles: [],
-            layout: 'bodyLayout'
+            'type': 'link',
+            'rangeStart': 82,
+            'rangeLength': 5,
+            'URL': 'https://example.com/and-space-after'
           },
           {
-            role: 'heading6',
-            text: 'header 6 text',
-            additions: [],
-            inlineTextStyles: [],
-            layout: 'bodyLayout'
-          },
-          {
-            role: 'body',
-            text: 'link\nnormal text bold text italic text bold italic text marked textlink2link3link4link5link6\n',
-            additions: [
-              {
-                'type': 'link',
-                'rangeStart': 0,
-                'rangeLength': 4,
-                'URL': 'https://mic.com'
-              },
-              {
-                'type': 'link',
-                'rangeStart': 67,
-                'rangeLength': 5,
-                'URL': 'http://mic.com'
-              },
-              {
-                'type': 'link',
-                'rangeStart': 72,
-                'rangeLength': 5,
-                'URL': 'https://mic.com'
-              },
-              {
-                'type': 'link',
-                'rangeStart': 77,
-                'rangeLength': 5,
-                'URL': 'https://en.wikipedia.org/wiki/Cr%C3%AApe'
-              },
-              {
-                'type': 'link',
-                'rangeStart': 82,
-                'rangeLength': 5,
-                'URL': 'https://example.com/and-space-after'
-              },
-              {
-                'type': 'link',
-                'rangeStart': 87,
-                'rangeLength': 5,
-                'URL': 'http://example.com/no-protocol'
-              }
-            ],
-            'inlineTextStyles': [
-              {
-                'rangeStart': 0,
-                'rangeLength': 4,
-                'textStyle': 'bodyLinkTextStyle'
-              },
-              {
-                'rangeStart': 17,
-                'rangeLength': 10,
-                'textStyle': 'bodyBoldStyle'
-              },
-              {
-                'rangeStart': 27,
-                'rangeLength': 12,
-                'textStyle': 'bodyItalicStyle'
-              },
-              {
-                'rangeStart': 39,
-                'rangeLength': 17,
-                'textStyle': 'bodyBoldItalicStyle'
-              },
-              {
-                'rangeStart': 67,
-                'rangeLength': 5,
-                'textStyle': 'bodyLinkTextStyle'
-              },
-              {
-                'rangeStart': 72,
-                'rangeLength': 5,
-                'textStyle': 'bodyLinkTextStyle'
-              },
-              {
-                'rangeStart': 77,
-                'rangeLength': 5,
-                'textStyle': 'bodyLinkTextStyle'
-              },
-              {
-                'rangeStart': 82,
-                'rangeLength': 5,
-                'textStyle': 'bodyLinkTextStyle'
-              },
-              {
-                'rangeStart': 87,
-                'rangeLength': 5,
-                'textStyle': 'bodyLinkTextStyle'
-              }
-            ],
-            layout: 'bodyLayout'
-          },
-          {
-            role: 'container',
-            layout: 'quoteLayout',
-            style: 'quoteStyle',
-            components: [{
-              role: 'quote',
-              text: 'block quote text',
-              additions: [],
-              inlineTextStyles: [],
-              textStyle: 'quoteTextStyle',
-              layout: 'quoteTextLayout',
-              style: 'quoteTextStyle'
-            }]
-          },
-          {
-            role: 'body',
-            text: 'other text\n',
-            additions: [],
-            inlineTextStyles: [],
-            layout: 'bodyLayout'
+            'type': 'link',
+            'rangeStart': 87,
+            'rangeLength': 5,
+            'URL': 'http://example.com/no-protocol'
           }
         ],
-        layout: {
-          ignoreDocumentMargin: true
-        }
+        'inlineTextStyles': [
+          {
+            'rangeStart': 0,
+            'rangeLength': 4,
+            'textStyle': 'bodyLinkTextStyle'
+          },
+          {
+            'rangeStart': 17,
+            'rangeLength': 10,
+            'textStyle': 'bodyBoldStyle'
+          },
+          {
+            'rangeStart': 27,
+            'rangeLength': 12,
+            'textStyle': 'bodyItalicStyle'
+          },
+          {
+            'rangeStart': 39,
+            'rangeLength': 17,
+            'textStyle': 'bodyBoldItalicStyle'
+          },
+          {
+            'rangeStart': 67,
+            'rangeLength': 5,
+            'textStyle': 'bodyLinkTextStyle'
+          },
+          {
+            'rangeStart': 72,
+            'rangeLength': 5,
+            'textStyle': 'bodyLinkTextStyle'
+          },
+          {
+            'rangeStart': 77,
+            'rangeLength': 5,
+            'textStyle': 'bodyLinkTextStyle'
+          },
+          {
+            'rangeStart': 82,
+            'rangeLength': 5,
+            'textStyle': 'bodyLinkTextStyle'
+          },
+          {
+            'rangeStart': 87,
+            'rangeLength': 5,
+            'textStyle': 'bodyLinkTextStyle'
+          }
+        ],
+        layout: 'bodyLayout'
+      },
+      {
+        role: 'container',
+        layout: 'quoteLayout',
+        style: 'quoteStyle',
+        components: [{
+          role: 'quote',
+          text: 'block quote text',
+          additions: [],
+          inlineTextStyles: [],
+          textStyle: 'quoteTextStyle',
+          layout: 'quoteTextLayout',
+          style: 'quoteTextStyle'
+        }]
+      },
+      {
+        role: 'body',
+        text: 'other text\n',
+        additions: [],
+        inlineTextStyles: [],
+        layout: 'bodyLayout'
       }
-    ]
+    ],
+    layout: {
+      ignoreDocumentMargin: true
+    }
+
   };
   t.deepEqual(expected.components, article.components);
   t.deepEqual(expected.componentTextStyles, article.componentTextStyles);
@@ -351,7 +347,7 @@ test('unknown element type', t => {
   };
 
   const {article} = toAppleNews(data, {identifier: '100'});
-  t.deepEqual(article.components[1].components, []);
+  t.true(article.components.length === 1);
 });
 
 test('embeds', t => {
@@ -562,7 +558,8 @@ test('embeds', t => {
     }
   ];
 
-  const actualBodyComponents = actual.components[1].components;
+  const actualBodyComponents = actual.components;
+  actualBodyComponents.shift();
   t.deepEqual(actualBodyComponents, expectedComponents);
 });
 
@@ -619,7 +616,8 @@ test('images', t => {
     ]
   };
   const {article, bundlesToUrls} = toAppleNews(input, {identifier: '100'});
-  const actualBodyComponents = article.components[1].components;
+  const actualBodyComponents = article.components;
+  actualBodyComponents.shift();
 
   t.deepEqual(bundlesToUrls, expectedBundlesToUrls);
   t.deepEqual(actualBodyComponents, expectedComponents);
@@ -632,7 +630,7 @@ test('header with image', t => {
       name: 'Sergii Iefremov',
       href: 'http://mic.com/'
     },
-    publishedDate: new Date('1985-03-22'),
+    publishedDate: new Date('1985-03-22T14:00:00Z'),
     headerEmbed: {
       type: 'embed',
       embedType: 'image',
@@ -711,7 +709,7 @@ test('empty text element should not be rendered', t => {
   };
 
   const {article} = toAppleNews(data, {identifier: '100'});
-  t.deepEqual(article.components[1].components, []);
+  t.true(article.components.length === 1);
 });
 
 test('custom hero component and image hero embed', t => {
@@ -721,7 +719,7 @@ test('custom hero component and image hero embed', t => {
       name: 'Sergii Iefremov',
       href: 'http://mic.com/'
     },
-    publishedDate: new Date('1985-03-22'),
+    publishedDate: new Date('1985-03-22T14:00:00Z'),
     headerEmbed: {
       type: 'embed',
       embedType: 'image',
@@ -779,7 +777,7 @@ test('custom hero component and no hero embed', t => {
       name: 'Sergii Iefremov',
       href: 'http://mic.com/'
     },
-    publishedDate: new Date('1985-03-22'),
+    publishedDate: new Date('1985-03-22T14:00:00Z'),
     body: []
   };
 
