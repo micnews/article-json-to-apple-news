@@ -42,6 +42,7 @@ test('apple news format', t => {
           { type: 'text', href: 'https://en.wikipedia.org/wiki/Crêpe', content: 'link4' },
           { type: 'text', href: 'https://example.com/and-space-after ', content: 'link5' },
           { type: 'text', href: '  example.com/no-protocol ', content: 'link6' }
+          { type: 'text', href: 'mailto:example@example.com', content: 'link7' }
         ]
       },
       { type: 'blockquote',
@@ -248,6 +249,12 @@ test('apple news format', t => {
             'rangeStart': 87,
             'rangeLength': 5,
             'URL': 'http://example.com/no-protocol'
+          },
+          {
+            'type': 'link',
+            'rangeStart': 92,
+            'rangeLength': 5,
+            'URL': 'mailto:example@example.com'
           }
         ],
         'inlineTextStyles': [
