@@ -41,7 +41,7 @@ test('apple news format', t => {
           { type: 'text', href: ' https://mic.com', content: 'link3' },
           { type: 'text', href: 'https://en.wikipedia.org/wiki/Crêpe', content: 'link4' },
           { type: 'text', href: 'https://example.com/and-space-after ', content: 'link5' },
-          { type: 'text', href: '  example.com/no-protocol ', content: 'link6' }
+          { type: 'text', href: '  example.com/no-protocol ', content: 'link6' },
           { type: 'text', href: 'mailto:example@example.com', content: 'link7' }
         ]
       },
