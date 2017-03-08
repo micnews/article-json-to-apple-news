@@ -212,7 +212,7 @@ test('apple news format', t => {
       },
       {
         role: 'body',
-        text: 'link\nnormal text bold text italic text bold italic text marked textlink2link3link4link5link6\n',
+        text: 'link\nnormal text bold text italic text bold italic text marked textlink2link3link4link5link6link7\n',
         additions: [
           {
             'type': 'link',
@@ -300,6 +300,11 @@ test('apple news format', t => {
           },
           {
             'rangeStart': 87,
+            'rangeLength': 5,
+            'textStyle': 'bodyLinkTextStyle'
+          },
+          {
+            'rangeStart': 92,
             'rangeLength': 5,
             'textStyle': 'bodyLinkTextStyle'
           }
