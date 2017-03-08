@@ -249,12 +249,6 @@ test('apple news format', t => {
             'rangeStart': 87,
             'rangeLength': 5,
             'URL': 'http://example.com/no-protocol'
-          },
-          {
-            'type': 'link',
-            'rangeStart': 92,
-            'rangeLength': 5,
-            'URL': 'mailto:example@example.com'
           }
         ],
         'inlineTextStyles': [
