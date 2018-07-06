@@ -440,6 +440,18 @@ test('embeds', t => {
         type: 'embed',
         embedType: 'video',
         src: 'http://mic.com/video.gif'
+      },
+      {
+        type: 'embed',
+        embedType: 'facebook',
+        embedAs: 'post',
+        src: 'https://www.facebook.com/MicMedia/posts/1985107918178655'
+      },
+      {
+        type: 'embed',
+        embedType: 'facebook',
+        embedAs: 'video',
+        src: 'https://www.facebook.com/MicMedia/videos/1587772317999461/'
       }
     ]
   };
